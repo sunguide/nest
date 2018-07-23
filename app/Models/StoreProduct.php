@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class StoreProduct extends Model
 {
     protected $fillable = ['title', 'description', 'image', 'on_sale', 'rating', 'sold_count', 'review_count', 'price'];
     protected $casts = [
@@ -14,7 +14,7 @@ class Product extends Model
     // 与商品SKU关联
     public function skus()
     {
-        return $this->hasMany(ProductSku::class);
+        return $this->hasMany(StoreProductSku::class);
     }
 
     public function getImageUrlAttribute()

@@ -6,7 +6,7 @@ use App\Http\Requests\SendReviewRequest;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\OrderRequest;
 use App\Models\UserAddress;
-use App\Models\Order;
+use App\Models\Store\Order;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Events\OrderReviewd;

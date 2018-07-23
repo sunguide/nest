@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCartRequest;
-use App\Models\ProductSku;
+use App\Models\Store\ProductSku;
 use App\Services\CartService;
 
 class CartController extends Controller
@@ -21,7 +21,6 @@ class CartController extends Controller
     {
         $cartItems = $this->cartService->get();
         $addresses = $request->user()->addresses()->orderBy('last_used_at', 'desc')->get();
-
         return view('cart.index', ['cartItems' => $cartItems, 'addresses' => $addresses]);
     }
 

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class CartItem extends Model
 {
+    protected $table = "store_cart_items";
     protected $fillable = ['amount'];
     public $timestamps = false;
 

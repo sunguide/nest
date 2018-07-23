@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use DB;
-use App\Models\OrderItem;
+use App\Models\Store\OrderItem;
 use App\Events\OrderReviewd;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

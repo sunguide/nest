@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Auth;
-use App\Models\CartItem;
+use App\Models\Store\CartItem;
 
 class CartService
 {

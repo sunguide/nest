@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
+use App\Models\Store\Order;
+use App\Models\Store\OrderItem;
+use App\Models\Store\Product;
 use Illuminate\Database\Seeder;
 
-class OrdersSeeder extends Seeder
+class StoreOrdersSeeder extends Seeder
 {
     public function run()
     {
@@ -15,6 +15,7 @@ class OrdersSeeder extends Seeder
         $orders = factory(Order::class, 100)->create();
         // 被购买的商品，用于后面更新商品销量和评分
         $products = collect([]);
+
         foreach ($orders as $order) {
             // 每笔订单随机 1 - 3 个商品
             $items = factory(OrderItem::class, random_int(1, 3))->create([
@@ -23,7 +24,6 @@ class OrdersSeeder extends Seeder
                 'review'      => $order->reviewed ? $faker->sentence : null,
                 'reviewed_at' => $order->reviewed ? $faker->dateTimeBetween($order->paid_at) : null, // 评价时间不能早于支付时间
             ]);
-
             // 计算总价
             $total = $items->sum(function (OrderItem $item) {
                 return $item->price * $item->amount;
@@ -42,7 +42,6 @@ class OrdersSeeder extends Seeder
             // 将这笔订单的商品合并到商品集合中
             $products = $products->merge($items->pluck('product'));
         }
-
         // 根据商品 ID 过滤掉重复的商品
         $products->unique('id')->each(function (Product $product) {
             // 查出该商品的销量、评分、评价数

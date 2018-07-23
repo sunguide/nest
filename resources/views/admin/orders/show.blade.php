@@ -44,12 +44,12 @@
         <td>￥{{ $order->total_amount }}</td>
         <!-- 这里也新增了一个发货状态 -->
         <td>发货状态：</td>
-        <td>{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
+        <td>{{ \App\Models\Store\Order::$shipStatusMap[$order->ship_status] }}</td>
       </tr>
       <!-- 订单发货开始 -->
       <!-- 如果订单未发货，展示发货表单 -->
-      @if($order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
-      @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_SUCCESS)
+      @if($order->ship_status === \App\Models\Store\Order::SHIP_STATUS_PENDING)
+      @if($order->refund_status !== \App\Models\Store\Order::REFUND_STATUS_SUCCESS)
       <tr>
         <td colspan="4">
           <form action="{{ route('admin.orders.ship', [$order->id]) }}" method="post" class="form-inline">
@@ -88,13 +88,13 @@
       </tr>
       @endif
       <!-- 订单发货结束 -->
-      @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_PENDING)
+      @if($order->refund_status !== \App\Models\Store\Order::REFUND_STATUS_PENDING)
       <tr>
         <td>退款状态：</td>
-        <td colspan="2">{{ \App\Models\Order::$refundStatusMap[$order->refund_status] }}，理由：{{ $order->extra['refund_reason'] }}</td>
+        <td colspan="2">{{ \App\Models\Store\Order::$refundStatusMap[$order->refund_status] }}，理由：{{ $order->extra['refund_reason'] }}</td>
         <td>
         <!-- 如果订单退款状态是已申请，则展示处理按钮 -->
-        @if($order->refund_status === \App\Models\Order::REFUND_STATUS_APPLIED)
+        @if($order->refund_status === \App\Models\Store\Order::REFUND_STATUS_APPLIED)
           <button class="btn btn-sm btn-success" id="btn-refund-agree">同意</button>
           <button class="btn btn-sm btn-danger" id="btn-refund-disagree">不同意</button>
         @endif

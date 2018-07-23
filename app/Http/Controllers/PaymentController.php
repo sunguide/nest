@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
 use Illuminate\Http\Request;
-use App\Models\Order;
+use App\Models\Store\Order;
 use Carbon\Carbon;
 use Endroid\QrCode\QrCode;
 use App\Events\OrderPaid;

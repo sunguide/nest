@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class StoreOrderItem extends Model
 {
     protected $fillable = ['amount', 'price', 'rating', 'review', 'reviewed_at'];
     protected $dates = ['reviewed_at'];
@@ -12,16 +12,16 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(StoreProduct::class);
     }
 
     public function productSku()
     {
-        return $this->belongsTo(ProductSku::class);
+        return $this->belongsTo(StoreProductSku::class);
     }
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(StoreOrder::class);
     }
 }

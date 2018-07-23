@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\InternalException;
 
-class ProductSku extends Model
+class StoreProductSku extends Model
 {
     protected $fillable = ['title', 'description', 'price', 'stock'];
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(StoreProduct::class);
     }
 
     public function decreaseStock($amount)

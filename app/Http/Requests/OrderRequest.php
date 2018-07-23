@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
-use App\Models\ProductSku;
+use App\Models\StoreProductSku;
 
 class OrderRequest extends Request
 {
@@ -17,7 +17,7 @@ class OrderRequest extends Request
             'items.*.sku_id' => [ // 检查 items 数组下每一个子数组的 sku_id 参数
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (!$sku = ProductSku::find($value)) {
+                    if (!$sku = StoreProductSku::find($value)) {
                         $fail('该商品不存在');
                         return;
                     }

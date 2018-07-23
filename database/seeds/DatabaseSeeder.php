@@ -8,8 +8,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersSeeder::class);
         $this->call(UserAddressesSeeder::class);
-        $this->call(ProductsSeeder::class);
+        $this->call(StoreProductsSeeder::class);
         $this->call(CouponCodesSeeder::class);
-        $this->call(OrdersSeeder::class);
+        $this->call(StoreOrdersSeeder::class);
     }
 }

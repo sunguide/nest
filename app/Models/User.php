@@ -38,12 +38,12 @@ class User extends Authenticatable
 
     public function cartItems()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(Store\CartItem::class);
     }
 
     public function favoriteProducts()
     {
-        return $this->belongsToMany(Product::class, 'user_favorite_products')
+        return $this->belongsToMany(Store\Product::class, 'user_favorite_products')
             ->withTimestamps()
             ->orderBy('user_favorite_products.created_at', 'desc');
     }
