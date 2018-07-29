@@ -6,6 +6,7 @@ use Monolog\Logger;
 use Yansongda\Pay\Pay;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('phone_number', function($attribute, $value, $parameters, $validator) {
+            if(preg_match("/^1[34578]\d{9}$/", $value)){
+                return true;
+            }
+            return false;
+        });
+
         Schema::defaultStringLength(191);
     }
 

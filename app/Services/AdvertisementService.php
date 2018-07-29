@@ -7,7 +7,7 @@ class AdvertisementService
 {
     public function getPositionItems(Position $position)
     {
-        return $position->with(['productSku.product'])->where('position_id', $position->id)->first();
+        return $position->with(['positionItem.position'])->where('position_id', $position->id)->first();
     }
 
     public function addPosition($name, $content, $displayMode, $status)

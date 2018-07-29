@@ -35,9 +35,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
     });
 });
-Route::get('shops', 'ShopsController@index')->name('shops.index');
+//Route::get('shops', 'ShopsController@index')->name('shops.index');
 Route::get('shops/{product}', 'ShopsController@show')->name('shops.show');
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
 Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');
+Route::resource('shops', 'ShopsController', ['only' => ['index', 'show', 'update', 'edit']]);
+

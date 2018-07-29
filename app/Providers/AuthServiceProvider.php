@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\User;
 use App\Models\Store\Order;
 use App\Policies\OrderPolicy;
 use App\Models\UserAddress;
@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         UserAddress::class => UserAddressPolicy::class,
         Order::class       => OrderPolicy::class,
+        User::class  => \App\Policies\UserPolicy::class,
     ];
 
     /**
@@ -31,5 +32,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+//        \Horizon::auth(function ($request) {
+//            // 是否是站长
+//            return \Auth::user()->hasRole('Founder');
+//        });
     }
 }

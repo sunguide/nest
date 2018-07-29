@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Exceptions\CouponCodeUnavailableException;
 
+//优惠码
 class CouponCode extends Model
 {
     // 用常量的方式定义支持的优惠券类型

@@ -31,7 +31,7 @@ class CreateAdvertisementsTable extends Migration
         Schema::create('advertisement_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('position_id');
-            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
+            $table->foreign('position_id')->references('id')->on('advertisement_positions')->onDelete('cascade');
             $table->string('title', 200);
             $table->text('content');
             $table->unsignedInteger('start_time');
