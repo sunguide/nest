@@ -23,6 +23,7 @@ $api->version('v1', [
     'middleware' => ['bindings']
 ], function ($api) {
 
+    //公共接口服务
     $api->group([
         'middleware' => 'api.throttle',
         'limit' => config('api.rate_limits.sign.limit'),
@@ -47,7 +48,7 @@ $api->version('v1', [
             ->name('api.users.store');
 
         // 第三方登录
-        $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore')
+        $api->post('authorizations/socials/{social_type}', 'AuthorizationsController@socialStore')
             ->name('api.socials.authorizations.store');
         // 登录
         $api->post('authorizations', 'AuthorizationsController@store')
@@ -61,6 +62,37 @@ $api->version('v1', [
         // 删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
+    });
+    // 商城接口
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => config('api.rate_limits.access.limit'),
+        'expires' => config('api.rate_limits.access.expires'),
+    ], function ($api) {
+        // 游客可以访问的接口
+        // 获取店铺列表
+        $api->get('store/shops', 'ShopsController@index')
+            ->name('api.shops.index');
+        // 店铺详情
+        $api->get('store/shops/{shop}', 'ShopsController@show')
+            ->name('api.shops.show');
+
+        // 获取店铺商品列表
+        $api->get('store/shops/{shop}/products', 'ProductsController@index')
+            ->name('api.shops.product.index');
+        // 店铺详商品情
+        $api->get('store/shop/products/{product}', 'ProductsController@show')
+            ->name('api.shops.product.show');
+
+        // 需要 token 验证的接口
+        $api->group(['middleware' => 'api.auth'], function($api) {
+            // 订单列表
+            $api->get('orders', 'OrdersController@index')
+                ->name('api.orders.index');
+            // 订单详情
+            $api->get('orders/{order}', 'OrdersController@show')
+                ->name('api.orders.show');
+        });
     });
 
     $api->group([

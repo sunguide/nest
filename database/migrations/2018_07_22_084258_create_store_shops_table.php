@@ -37,6 +37,11 @@ class CreateStoreShopsTable extends Migration
             $table->decimal('rating',2, 2)->default(0);
             $table->timestamps();
         });
+
+        Schema::table('store_products', function (Blueprint $table) {
+            $table->unsignedInteger('shop_id')->nullable()->after('id');
+            $table->foreign('shop_id')->references('id')->on('store_shops')->onDelete('cascade');
+        });
     }
 
     /**
@@ -47,5 +52,10 @@ class CreateStoreShopsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('store_shops');
+
+        Schema::table('store_products', function (Blueprint $table) {
+            $table->dropForeign(['shop_id']);
+            $table->dropColumn('shop_id');
+        });
     }
 }

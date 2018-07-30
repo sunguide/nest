@@ -47,9 +47,18 @@ class User extends Authenticatable implements JWTSubject
 
     public function favoriteProducts()
     {
-        return $this->belongsToMany(Store\Product::class, 'user_favorite_products')
+        return $this->belongsToMany(Store\Product::class, 'user_favorites')
             ->withTimestamps()
-            ->orderBy('user_favorite_products.created_at', 'desc');
+            ->where("user_favorites.target_type=" . Store\Product::class)
+            ->orderBy('user_favorites.created_at', 'desc');
+    }
+
+    public function favoriteShops()
+    {
+        return $this->belongsToMany(Store\Product::class, 'user_favorites')
+            ->withTimestamps()
+            ->where("user_favorites.target_type=" . Store\Shop::class)
+            ->orderBy('user_favorites.created_at', 'desc');
     }
 
     public function setPasswordAttribute($value)
