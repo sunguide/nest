@@ -33,7 +33,7 @@ class RepliesController extends Controller
 
         return $this->response->noContent();
     }
-
+t
     public function index(Topic $topic)
     {
         $replies = $topic->replies()->paginate(20);

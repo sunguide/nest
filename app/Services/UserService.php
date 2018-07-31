@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\UserFavorite;
 use Auth;
 use App\Models\User;
 
@@ -17,5 +18,12 @@ class UserService
             ->where('phone', $phone)
             ->first();
         return $user;
+    }
+
+    public function getFavoritesByUserId($userId){
+        $userFavorites = UserFavorite::query()
+            ->where('user_id', $userId)
+            ->get();
+        return $userFavorites;
     }
 }

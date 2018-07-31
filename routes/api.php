@@ -85,7 +85,17 @@ $api->version('v1', [
             ->name('api.shops.product.show');
 
         // 需要 token 验证的接口
-        $api->group(['middleware' => 'api.auth'], function($api) {
+        $api->group([
+            'middleware' => 'api.throttle'
+        ], function($api) {
+//        $api->group(['middleware' => 'api.auth'], function($api) {
+            // 某个用户收藏的商品
+            $api->get('users/{user}/favorite/products', 'UserFavoritesController@index');
+            // 用户收藏商品
+            $api->post('users/{user}/favorite/product/{product}', 'UserFavoritesController@store');
+            // 用户取消商品
+            $api->delete('users/{user}/favorite/product/{product}', 'UserFavoritesController@destroy');
+
             // 订单列表
             $api->get('orders', 'OrdersController@index')
                 ->name('api.orders.index');

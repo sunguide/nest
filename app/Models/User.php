@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\Api\UserFavoriteRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -43,6 +44,11 @@ class User extends Authenticatable implements JWTSubject
     public function cartItems()
     {
         return $this->hasMany(Store\CartItem::class);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(UserFavorite::class);
     }
 
     public function favoriteProducts()

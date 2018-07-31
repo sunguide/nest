@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api;
 
-use Dingo\Api\Http\FormRequest as BaseFormRequest;
+use Illuminate\Http\Request;
 
-class FormRequest extends BaseFormRequest
+class IRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
