@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\CouponCodeUnavailableException;
+use App\Models\Coupon;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Store\Order;
@@ -14,7 +15,7 @@ use Carbon\Carbon;
 
 class OrderService
 {
-    public function store(User $user, UserAddress $address, $remark, $items, CouponCode $coupon = null)
+    public function store(User $user, UserAddress $address, $remark, $items, Coupon $coupon = null)
     {
         if ($coupon) {
             $coupon->checkAvailable($user);

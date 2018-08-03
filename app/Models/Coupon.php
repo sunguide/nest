@@ -42,6 +42,7 @@ class Coupon extends Model
 
     protected $appends = ['description'];
 
+
     public function getDescriptionAttribute()
     {
         $str = '';
@@ -115,5 +116,11 @@ class Coupon extends Model
         } else {
             return $this->decrement('used');
         }
+    }
+
+    public function scopeRecent($query)
+    {
+        // 按照创建时间排序
+        return $query->orderBy('created_at', 'desc');
     }
 }

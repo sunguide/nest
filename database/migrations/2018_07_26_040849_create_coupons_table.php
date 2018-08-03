@@ -17,15 +17,15 @@ class CreateCouponsTable extends Migration
             $table->increments('id');
             $table->string('name'); //优惠券名称
             $table->string('description');//优惠券描述
-            $table->string('channel'); //渠道标识
+            $table->string('channel')->nullable(); //渠道标识
             $table->string('type');//fixed
             $table->decimal('value');
             $table->unsignedInteger('total');
             $table->unsignedInteger('used')->default(0);
-            $table->decimal('min_amount', 10, 2);
+            $table->decimal('min_amount', 10, 2)->default(0);
             $table->datetime('not_before')->nullable();
             $table->datetime('not_after')->nullable();
-            $table->boolean('enabled');
+            $table->boolean('enabled')->default(1);
             $table->timestamps();
         });
     }

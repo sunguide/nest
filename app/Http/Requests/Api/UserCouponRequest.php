@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-class UserFavoriteRequest extends FormRequest
+class UserCouponRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,7 @@ class UserFavoriteRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'target_type' => 'required',
-                    'target_id' => 'required',
+                    'coupon_id' => 'required'
                 ];
                 break;
         }
@@ -24,8 +23,7 @@ class UserFavoriteRequest extends FormRequest
     public function attributes()
     {
         return [
-            'target_type' => '收藏对象类型',
-            'target_id' => '收藏对象id',
+            'coupon_id' => '优惠券不存在',
         ];
     }
 }

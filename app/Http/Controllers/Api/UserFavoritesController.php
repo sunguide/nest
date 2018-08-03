@@ -26,19 +26,39 @@ class UserFavoritesController extends Controller
 
     public function store(UserFavoriteRequest $request)
     {
-        $target_type = $request->product ? "product": "shop";
-        $request->user()->favorites()->create($request->only([
-            'target_type' => $target_type,
-            'target_id' => $request->product
-        ]));
-
+        $target_type = $request->target_type;
+        $target_id = $request->target_id;
+        //已经收藏
+        if(!$request->user()->favorites()->where('target_type','=', $target_type)
+            ->where('target_type','=', $target_type)
+            ->where('target_id','=', $target_id)
+            ->first()){
+            $result = $request->user()->favorites()->create([
+                'target_type' => $target_type,
+                'target_id' => $target_id
+            ]);
+            if(!$result){
+                return $this->response->error("收藏失败", 500);
+            }
+        }
         return $this->response->noContent();
     }
 
-    public function destroy(UserFavorite $userFavorite)
+    public function destroy(IRequest $request)
     {
-        $this->authorize('own', $userFavorite);
-        $userFavorite->delete();
-        return $this->response->noContent();
+        $userId = \Auth::guard('api')->id();
+        $target_type = $_GET['target_type'];
+        $target_id = $_GET['target_id'];
+        $userFavorite = UserFavorite::query()
+            ->where('user_id','=', $userId)
+            ->where('target_type','=', $target_type)
+            ->where('target_id','=', $target_id)
+            ->first();
+        if($userFavorite){
+            $userFavorite->delete();
+        }else{
+            return $this->response->noContent();
+        }
+        return $this->response->item($userFavorite, new UserFavoritesTransformer);
     }
 }

@@ -33,23 +33,35 @@ class User extends Authenticatable implements JWTSubject
         'email_verified' => 'boolean',
     ];
 
+    //
     public function findByPhone(){
 
     }
+
+    //我的地址
     public function addresses()
     {
         return $this->hasMany(UserAddress::class);
     }
 
+    //我的购物车
     public function cartItems()
     {
         return $this->hasMany(Store\CartItem::class);
     }
 
+    //我的优惠券
+    public function coupons()
+    {
+        return $this->hasMany(UserCoupon::class);
+    }
+
+    //我的收藏
     public function favorites()
     {
         return $this->hasMany(UserFavorite::class);
     }
+
 
     public function favoriteProducts()
     {

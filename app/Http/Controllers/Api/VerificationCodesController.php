@@ -31,6 +31,7 @@ class VerificationCodesController extends Controller
         }
         $currentDay = now()->format("Ymd");
         $count = \Cache::get("sms_send_count_{$currentDay}_{$phone}");
+        //每天一个手机号限量5条
         if($count && $count >= 5){
             return $this->response->error('今日获取已达到上限', 400);
         }

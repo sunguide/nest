@@ -84,24 +84,52 @@ $api->version('v1', [
         $api->get('store/shop/products/{product}', 'ProductsController@show')
             ->name('api.shops.product.show');
 
+        // 店铺优惠券列表
+        $api->get('shops/{shop}/coupons', 'ShopCouponsController@index')
+            ->name('api.shop.coupons.index');
+        // 店铺优惠券详情
+        $api->get('shops/{shop}/coupons/{coupon}', 'ShopCouponsController@show')
+            ->name('api.shop.coupons.show');
+
+
         // 需要 token 验证的接口
-        $api->group([
-            'middleware' => 'api.throttle'
-        ], function($api) {
-//        $api->group(['middleware' => 'api.auth'], function($api) {
-            // 某个用户收藏的商品
-            $api->get('users/{user}/favorite/products', 'UserFavoritesController@index');
-            // 用户收藏商品
-            $api->post('users/{user}/favorite/product/{product}', 'UserFavoritesController@store');
-            // 用户取消商品
-            $api->delete('users/{user}/favorite/product/{product}', 'UserFavoritesController@destroy');
+        $api->group(['middleware' => 'api.auth'], function($api) {
+            // 用户的收藏
+            $api->get('user/favorites', 'UserFavoritesController@index');
+            // 用户收藏
+            $api->post('user/favorites', 'UserFavoritesController@store');
+//            $api->post('user/favorite/shop/{shop}', 'UserFavoritesController@storeShop');
+//            // 用户收藏商品
+//            $api->post('user/favorite/product/{product}', 'UserFavoritesController@storeProduct');
+            // 用户取消收藏
+            $api->delete('user/favorites', 'UserFavoritesController@destroy');
 
             // 订单列表
             $api->get('orders', 'OrdersController@index')
                 ->name('api.orders.index');
+            // 创建订单
+            $api->post('orders', 'OrdersController@store')
+                ->name('api.orders.store');
             // 订单详情
             $api->get('orders/{order}', 'OrdersController@show')
                 ->name('api.orders.show');
+
+
+            // 我的优惠券列表
+            $api->get('user/coupons', 'UserCouponsController@index')
+                ->name('api.user.coupons.index');
+            // 领取店铺优惠券
+            $api->post('user/coupons', 'UserCouponsController@store')
+                ->name('api.user.coupons.show');
+            // 我的优惠券详情
+            $api->get('user/coupons/{coupon}', 'UserCouponsController@show')
+                ->name('api.user.coupons.show');
+
+            // 发布店铺优惠券
+            $api->post('shops/{shop}/coupons', 'ShopCouponsController@store')
+                ->name('api.shop.coupons.show');
+
+
         });
     });
 

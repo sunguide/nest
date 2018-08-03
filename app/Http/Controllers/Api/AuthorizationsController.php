@@ -10,8 +10,25 @@ use App\Transformers\DataTransformer;
 use App\Http\Requests\Api\AuthorizationRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 
+/**
+ * Authorizations 登录授权
+ *
+ * @Resource("authorizations", uri="/authorizations")
+ */
+
 class AuthorizationsController extends Controller
 {
+    /**
+     * 应用登录授权
+     *
+     * 使用账号和密码登录
+     *
+     * @Post("/")
+     * @Versions({"v1"})
+     * @Request({"username": "piu", "password": "******"})
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
+
     public function store(AuthorizationRequest $request)
     {
         $username = $request->username;
@@ -27,6 +44,17 @@ class AuthorizationsController extends Controller
 
         return $this->respondWithToken($token)->setStatusCode(201);
     }
+
+    /**
+     * 第三方登录授权
+     *
+     * 支持微信等第三方登录授权验证
+     *
+     * @Post("/socials/{social_type}")
+     * @Versions({"v1"})
+     * @Request()
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
 
     public function socialStore($type, SocialAuthorizationRequest $request, UserSocialite $userSocialite)
     {
@@ -87,11 +115,32 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
+    /**
+     * 刷新Token
+     *
+     * token有效期1小时
+     *
+     * @Put("/")
+     * @Versions({"v1"})
+     * @Request()
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
     public function update()
     {
         $token = Auth::guard('api')->refresh();
         return $this->respondWithToken($token);
     }
+
+    /**
+     * 退出登录
+     *
+     * 销毁token
+     *
+     * @Delete("/")
+     * @Versions({"v1"})
+     * @Request()
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
 
     public function destroy()
     {

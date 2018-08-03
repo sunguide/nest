@@ -25,6 +25,12 @@ class Shop extends Model
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
     ];
 
+    //店铺优惠券
+    public function coupons()
+    {
+        return $this->hasMany(ShopCoupon::class);
+    }
+
     public function getImagesAttribute()
     {
         // 如果 images 字段本身就已经是完整的 url 就直接返回
