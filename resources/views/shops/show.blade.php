@@ -5,59 +5,61 @@
 <div class="row">
 <div class="col-lg-10 col-lg-offset-1">
 <div class="panel panel-default">
-  <div class="panel-body product-info">
+  <div class="panel-body">
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-3">
         <img class="cover" src="{{ $shop->logo_url }}" alt="">
       </div>
       <div class="col-sm-7">
         <div class="title">{{ $shop->name }}</div>
-        <div class="price"><label>价格</label><em>￥</em><span>{{ $shop->view_count }}</span></div>
-        <div class="sales_and_reviews">
-          <div class="sold_count">累计销量 <span class="count">{{ $shop->view_count }}</span></div>
-          <div class="review_count">累计评价 <span class="count">{{ $shop->view_count }}</span></div>
-          <div class="rating" title="评分 {{ $shop->rating }}">评分 <span class="count">{{ str_repeat('★', floor($shop->rating)) }}{{ str_repeat('☆', 5 - floor($shop->rating)) }}</span></div>
-        </div>
-        <div class="cart_amount"><label>数量</label><input type="text" class="form-control input-sm" value="1"><span>件</span><span class="stock"></span></div>
-        <div class="buttons">
+        <div class="buttons" style="float:right">
           @if($favored)
             <button class="btn btn-danger btn-disfavor">取消收藏</button>
           @else
             <button class="btn btn-success btn-favor">❤ 收藏</button>
           @endif
-          <button class="btn btn-primary btn-add-to-cart">加入购物车</button>
         </div>
       </div>
     </div>
-    <div class="product-detail">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#product-detail-tab" aria-controls="product-detail-tab" role="tab" data-toggle="tab">商品详情</a></li>
-        <li role="presentation"><a href="#product-reviews-tab" aria-controls="product-reviews-tab" role="tab" data-toggle="tab">用户评价</a></li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="product-detail-tab">
-          {!! $shop->description !!}
-        </div>
-        <div role="tabpanel" class="tab-pane" id="product-reviews-tab">
-          <!-- 评论列表开始 -->
-          <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <td>用户</td>
-              <td>商品</td>
-              <td>评分</td>
-              <td>评价</td>
-              <td>时间</td>
-            </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-          </table>
-          <!-- 评论列表结束 -->
-        </div>
-      </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <form action="{{ route('products.index') }}" class="form-inline search-form">
+        <input type="text" class="form-control input-sm" name="search" placeholder="搜索">
+        <button class="btn btn-primary btn-sm">搜索</button>
+        <select name="order" class="form-control input-sm pull-right">
+          <option value="">排序方式</option>
+          <option value="price_asc">价格从低到高</option>
+          <option value="price_desc">价格从高到低</option>
+          <option value="sold_count_desc">销量从高到低</option>
+          <option value="sold_count_asc">销量从低到高</option>
+          <option value="rating_desc">评价从高到低</option>
+          <option value="rating_asc">评价从低到高</option>
+        </select>
+      </form>
     </div>
+    <div class="row products-list">
+      @foreach($products as $product)
+        <div class="col-xs-3 product-item">
+          <div class="product-content">
+            <div class="top">
+              <div class="img">
+                <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                  <img src="{{ $product->image_url }}" alt="">
+                </a>
+              </div>
+              <div class="price"><b>￥</b>{{ $product->price }}</div>
+              <a href="{{ route('products.show', ['product' => $product->id]) }}">{{ $product->title }}</a>
+            </div>
+            <div class="bottom">
+              <div class="sold_count">销量 <span>{{ $product->sold_count }}笔</span></div>
+              <div class="review_count">评价 <span>{{ $product->review_count }}</span></div>
+            </div>
+          </div>
+        </div>
+      @endforeach
+    </div>
+    <div class="pull-right">{{ $products->appends($filters)->render() }}</div>
   </div>
 </div>
 </div>

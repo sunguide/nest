@@ -20,7 +20,16 @@ class Shop extends Model
         self::STATUS_FAILED => '认证失败'
     ];
     protected $table = 'store_shops';
-    protected $fillable = ['name', 'introduce', 'images', 'on_sale', 'rating', 'view_count', 'favorite_count', 'product_count'];
+    protected $fillable = [
+        'name',
+        'introduce',
+        'images',
+        'on_sale',
+        'rating',
+        'view_count',
+        'favorite_count',
+        'product_count'
+    ];
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
     ];
@@ -29,6 +38,12 @@ class Shop extends Model
     public function coupons()
     {
         return $this->hasMany(ShopCoupon::class);
+    }
+
+    //店铺优惠券
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
     public function getImagesAttribute()

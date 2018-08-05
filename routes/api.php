@@ -62,6 +62,47 @@ $api->version('v1', [
         // 删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
+
+
+        // 分类列表
+        $api->get('categories', 'CategoriesController@index')
+            ->name('api.categories.index');
+        // 分类创建
+        $api->post('categories', 'CategoriesController@store')
+            ->name('api.categories.store');
+
+        // 反馈列表
+        $api->get('feedbacks', 'FeedbacksController@index')
+            ->name('api.feedbacks.index');
+        // 提交用户反馈
+        $api->post('feedbacks', 'FeedbacksController@store')
+            ->name('api.feedbacks.store');
+
+        // 获取分类文章列表
+        $api->get('categories/{category}/articles', 'ArticlesController@index')
+            ->name('api.categories.articles.index');
+
+        // 发布分类文章
+        $api->post('categories/{category}/articles', 'ArticlesController@store')
+            ->name('api.categories.articles.index');
+    });
+
+    // 广告接口
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => config('api.rate_limits.access.limit'),
+        'expires' => config('api.rate_limits.access.expires'),
+    ], function ($api) {
+        // 获取广告位置列表
+        $api->get('advertisement/positions', 'AdvertisementPositionsController@index')
+            ->name('api.advertisement.positions.index');
+        // 广告位置详情
+        $api->get('advertisement/positions/{position}', 'AdvertisementPositionsController@show')
+            ->name('api.advertisement.positions.show');
+
+        // 获取广告内容列表
+        $api->get('advertisement/positions/{position}/items', 'AdvertisementItemsController@index')
+            ->name('api.advertisement.items.index');
     });
     // 商城接口
     $api->group([

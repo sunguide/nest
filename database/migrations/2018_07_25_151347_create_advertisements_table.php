@@ -20,8 +20,8 @@ class CreateAdvertisementsTable extends Migration
             $table->text('description');
             $table->string('platform',20);//ios,android,h5,web
             $table->string('display_mode'); //文字，图片，轮播
-            $table->string('code',200); //js 短代码
-            $table->string('remark',200);
+            $table->string('code',200)->nullable(); //js 短代码
+            $table->string('remark',200)->nullable();
             $table->text('extra');
             $table->integer('status');
             $table->timestamps();
@@ -33,6 +33,8 @@ class CreateAdvertisementsTable extends Migration
             $table->unsignedInteger('position_id');
             $table->foreign('position_id')->references('id')->on('advertisement_positions')->onDelete('cascade');
             $table->string('title', 200);
+            $table->string('cover', 200)->nullable();
+            $table->string('url', 200)->nullable();
             $table->text('content');
             $table->unsignedInteger('start_time');
             $table->unsignedInteger('end_time');

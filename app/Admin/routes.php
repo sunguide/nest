@@ -26,4 +26,19 @@ Route::group([
     $router->get('coupon_codes/{id}/edit', 'CouponCodesController@edit');
     $router->put('coupon_codes/{id}', 'CouponCodesController@update');
     $router->delete('coupon_codes/{id}', 'CouponCodesController@destroy');
+    //广告位管理
+    $router->get('advertisement/positions', 'AdvertisementPositionsController@index');
+    $router->post('advertisement/positions', 'AdvertisementPositionsController@store');
+    $router->get('advertisement/positions/create', 'AdvertisementPositionsController@create');
+    $router->get('advertisement/positions/{id}/edit', 'AdvertisementPositionsController@edit');
+    $router->put('advertisement/positions/{id}', 'AdvertisementPositionsController@update');
+    $router->delete('advertisement/positions/{id}', 'AdvertisementPositionsController@destroy');
+
+    //广告内容管理
+    $router->get('advertisement/items', 'AdvertisementItemsController@index');
+    $router->post('advertisement/items', 'AdvertisementItemsController@store');
+    $router->get('advertisement/items/create', 'AdvertisementItemsController@create');
+    $router->get('advertisement/items/{id}/edit', 'AdvertisementItemsController@edit');
+    $router->put('advertisement/items/{id}', 'AdvertisementItemsController@update');
+    $router->delete('advertisement/items/{id}', 'AdvertisementItemsController@destroy');
 });

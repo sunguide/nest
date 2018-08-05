@@ -31,8 +31,19 @@ class AdvertisementItem extends Model
         'status',
     ];
     protected $casts = [
+        'start_time',
+        'end_time'
     ];
-    // 指明这两个字段是日期类型
-    protected $dates = ['start_time', 'end_time'];
 
+    protected static function boot()
+    {
+        parent::boot();
+        // 监听模型创建事件，在写入数据库之前触发
+        static::creating(function ($model) {
+            // 如果模型的 exta 字段为空
+            if (!$model->extra) {
+                $model->extra = '{}';
+            }
+        });
+    }
 }

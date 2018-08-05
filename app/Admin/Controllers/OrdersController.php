@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Exceptions\InternalException;
-use App\Models\Order;
+use App\Models\Store\Order;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidRequestException;
 use Encore\Admin\Form;
