@@ -58,6 +58,10 @@ PiuShop 功能如下：
 -  管理员接到退款请求后的拒绝退款；
 -  支付宝、微信支付的退款处理；
 -  优惠券的设计与实现；
+## API文档生成
+*** 利用API blueprint 
+*** php artisan api:docs
+*** aglio -i public/docs.md -o public/docs.html
 
 ## 截图
 

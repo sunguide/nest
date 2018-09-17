@@ -41,4 +41,8 @@ Route::group([
     $router->get('advertisement/items/{id}/edit', 'AdvertisementItemsController@edit');
     $router->put('advertisement/items/{id}', 'AdvertisementItemsController@update');
     $router->delete('advertisement/items/{id}', 'AdvertisementItemsController@destroy');
+
+    //意见反馈
+    $router->get('feedback', 'FeedbackController@index');
+    $router->delete('feedback/{id}', 'FeedbackController@destroy');
 });

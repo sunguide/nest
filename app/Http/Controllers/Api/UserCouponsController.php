@@ -20,11 +20,14 @@ use Illuminate\Http\Request;
 class UserCouponsController extends Controller
 {
     /**
+     * 用户优惠券
+     *
      * 获取用户优惠券列表
      *
      * @Post("/")
      * @Versions({"v1"})
-     * @Response(200, body={"data":[{"id":8,"user_id":1015,"coupon_id":1,"extra":"","enable":null,"coupon":{"data":{"id":1,"name":"5元优惠券","description":"满10减5","type":"fixed","value":"5.00","min_amount":"10.00","created_at":"-0001-11-30 00:00:00"}}}],"meta":{"pagination":{"total":9,"count":9,"per_page":10,"current_page":1,"total_pages":1,"links":[]}}})
+     * @Request()
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
      */
     public function index(Request $request)
     {

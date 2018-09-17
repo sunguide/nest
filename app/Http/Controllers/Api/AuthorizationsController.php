@@ -25,7 +25,7 @@ class AuthorizationsController extends Controller
      *
      * @Post("/")
      * @Versions({"v1"})
-     * @Request({"username": "piu", "password": "******"})
+     * @Request({"username": "piuio", "password": "******"})
      * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
      */
 

@@ -169,6 +169,8 @@ return [
          * Package Service Providers...
          */
         \SocialiteProviders\Manager\ServiceProvider::class,
+        \Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

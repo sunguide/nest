@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 /**
  *  店铺优惠券
  *
- * @Resource("user/coupons", uri="/user/coupons")
+ * @Resource("shop/coupons", uri="/shop/coupons")
  */
 
 class ShopCouponsController extends Controller
@@ -29,16 +29,15 @@ class ShopCouponsController extends Controller
      *
      * @Post("/")
      * @Versions({"v1"})
-     * @Response(200, body={"data":[{"id":8,"shop_id":1015,"coupon_id":1,"extra":"","enable":null,"coupon":{"data":{"id":1,"name":"5元优惠券","description":"满10减5","type":"fixed","value":"5.00","min_amount":"10.00","created_at":"-0001-11-30 00:00:00"}}}],"meta":{"pagination":{"total":9,"count":9,"per_page":10,"current_page":1,"total_pages":1,"links":[]}}})
+     * @Response(200, body={"data":{"id":9,"user_id":1015,"coupon_id":"1","extra":null,"enable":null,"coupon":{"data":{"id":1,"name":"5元优惠券","description":"满10减5","type":"fixed","value":"5.00","min_amount":"10.00","created_at":"-0001-11-30 00:00:00"}}}})
      */
     public function index(Shop $shop, IRequest $request)
     {
         $coupons = $shop->coupons()->recent()
             ->paginate(10);
-
         return $this->response->paginator($coupons, new ShopCouponTransformer());
-
     }
+
     /**
      * 发布优惠券
      *

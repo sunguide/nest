@@ -6,8 +6,24 @@ use Illuminate\Http\Request;
 use Gregwar\Captcha\CaptchaBuilder;
 use App\Http\Requests\Api\CaptchaRequest;
 
+/**
+ * 图片验证码
+ *
+ * @Resource("captchas", uri="/captchas")
+ */
+
 class CaptchasController extends Controller
 {
+    /**
+     * 图片验证码
+     *
+     * 获取验证码图片
+     *
+     * @Post("/")
+     * @Versions({"v1"})
+     * @Request({"username": "piuio", "password": "******"})
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
     public function store(CaptchaRequest $request, CaptchaBuilder $captchaBuilder)
     {
         $key = 'captcha-'.str_random(15);
@@ -26,7 +42,16 @@ class CaptchasController extends Controller
 
         return $this->response->array($result)->setStatusCode(201);
     }
-
+    /**
+     * 图片验证码
+     *
+     * 验证验证码图片
+     *
+     * @Post("/verify")
+     * @Versions({"v1"})
+     * @Request({"username": "piuio", "password": "******"})
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
     public function verify(Request $request)
     {
         if(!$request->verification_key){

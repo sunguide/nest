@@ -6,7 +6,7 @@ use App\Models\Coupon;
 use App\Models\UserCoupon;
 use League\Fractal\TransformerAbstract;
 
-class ShopCouponTransformer extends TransformerAbstract
+class UserCouponTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['coupon'];
     protected $defaultIncludes = ['coupon'];
