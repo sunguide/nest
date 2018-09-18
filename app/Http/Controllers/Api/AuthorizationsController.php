@@ -11,7 +11,7 @@ use App\Http\Requests\Api\AuthorizationRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 
 /**
- * Authorizations 登录授权
+ * 授权认证
  *
  * @Resource("authorizations", uri="/authorizations")
  */
@@ -19,7 +19,7 @@ use App\Http\Requests\Api\SocialAuthorizationRequest;
 class AuthorizationsController extends Controller
 {
     /**
-     * 应用登录授权
+     * 授权认证
      *
      * 使用账号和密码登录
      *

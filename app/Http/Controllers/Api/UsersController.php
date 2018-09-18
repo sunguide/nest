@@ -12,19 +12,30 @@ use App\Http\Requests\Api\UserRequest;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 /**
- * @resource 用户
+ * 注册登录
  *
  * 用户相关接口模块
+ *
+ * @Resource("users", uri="/users")
  */
 
 class UsersController extends Controller
 {
     use ResetsPasswords;
     /**
-     * 用户注册
+     *
      *
      * 需要授权
+     * @Resource("users", uri="/users")
+     */
+
+    /**
+     * 用户注册
      *
+     * @Post("/")
+     * @Versions({"v1"})
+     * @Request({"name": "piuio", "password": "******"})
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
      */
     public function store(UserRequest $request, UserService $userService)
     {
@@ -51,7 +62,14 @@ class UsersController extends Controller
             ])
             ->setStatusCode(201);
     }
-    //短信验证码登录
+    /**
+     * 短信验证码登录
+     *
+     * @Post("/sms/login")
+     * @Versions({"v1"})
+     * @Request({"phone": "piuio", "verification_key": "foo","verification_code":"1234"})
+     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     */
     public function smsStore(Request $request, UserService $userService){
         if(!$request->phone){
             return $this->response->error('请输入手机号', 422);
@@ -77,10 +95,12 @@ class UsersController extends Controller
             ->setStatusCode(201);
     }
 
+
     public function me()
     {
         return $this->response->item($this->user(), new UserTransformer());
     }
+
 
     public function update(UserRequest $request)
     {

@@ -60,8 +60,9 @@ PiuShop 功能如下：
 -  优惠券的设计与实现；
 ## API文档生成
 *** 利用API blueprint 
-*** php artisan api:docs
-*** aglio -i public/docs.md -o public/docs.html
+php artisan api:docs
+php artisan api:docs --output-file ./public/docs.md
+aglio -i public/docs.md -o public/docs.html
 
 ## 截图
 
