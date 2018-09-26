@@ -9,8 +9,19 @@ use App\Http\Requests\Api\VerificationCodeRequest;
 
 class VerificationCodesController extends Controller
 {
+    /**
+     * 短信验证码
+     *
+     * 获取短信验证码
+     *
+     * @Post("/captchas/sms")
+     * @Versions({"v1"})
+     * @Request({"phone": "18500000000"})
+     * @Response(200, body={"key": "verificationCode_roQ3cfoITTHLLiP","expired_at": "2018-09-26 13:44:00"})
+     */
     public function store(VerificationCodeRequest $request, EasySms $easySms)
     {
+        //如果传递图片验证码key则需要先验证图片验证码的有效性
         if($request->captcha_key){
             $captchaData = \Cache::get($request->captcha_key);
 
