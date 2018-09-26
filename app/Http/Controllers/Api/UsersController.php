@@ -34,8 +34,8 @@ class UsersController extends Controller
      *
      * @Post("/")
      * @Versions({"v1"})
-     * @Request({"name": "piuio", "password": "******"})
-     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     * @Request({"phone": "18500000000", "password": "******"})
+     * @Response(200, body={"data":{"id":1018,"name":"18521527520","phone":"18521527520","email":null,"avatar":null,"introduction":null,"bound_phone":true,"created_at":"2018-09-26 15:12:05","updated_at":"2018-09-26 15:12:05"},"meta":{"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC91c2VycyIsImlhdCI6MTUzNzk3NDcyNSwiZXhwIjoxNTM3OTc4MzI1LCJuYmYiOjE1Mzc5NzQ3MjUsImp0aSI6InJqdldWWHNtSk1yemV0M1MiLCJzdWIiOjEwMTgsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.NtnIOLLbggmquk5nzpdOhy6U7h8CCgx2zQUz0pR1hJM","token_type":"Bearer","expires_in":86400}})
      */
     public function store(UserRequest $request, UserService $userService)
     {

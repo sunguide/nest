@@ -54,7 +54,7 @@ $api->version('v1', [
         $api->post('authorizations', 'AuthorizationsController@store')
             ->name('api.authorizations.store');
         // 找回密码
-        $api->post('users/resetPassword', 'ResetPasswordController@reset')
+        $api->post('users/resetPassword', 'UserResetPasswordController@reset')
             ->name('api.users.resetPassword');
         // 刷新token
         $api->put('authorizations/current', 'AuthorizationsController@update')

@@ -6,7 +6,7 @@ use App\Http\Middleware\VerifyCaptcha;
 use App\Models\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
-class ResetPasswordController extends Controller
+class UserResetPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
