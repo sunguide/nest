@@ -212,6 +212,11 @@ $api->version('v1', [
             // 编辑登录用户信息
             $api->patch('user', 'UsersController@update')
                 ->name('api.user.update');
+            // 获取我的用户认证
+            $api->get('user/authentication', 'UserAuthenticationController@index')->name('api.user.authentication.index');
+            // 提交我的用户认证
+            $api->post('user/authentication', 'UserAuthenticationController@store')->name('api.user.authentication.store');
+
             // 图片资源
             $api->post('images', 'ImagesController@store')
                 ->name('api.images.store');

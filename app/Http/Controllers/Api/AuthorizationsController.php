@@ -118,9 +118,9 @@ class AuthorizationsController extends Controller
     /**
      * 刷新Token
      *
-     * token有效期1小时
+     * token有效期1天
      *
-     * @Put("/")
+     * @Put("/current")
      * @Versions({"v1"})
      * @Request()
      * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
@@ -153,7 +153,7 @@ class AuthorizationsController extends Controller
         return $this->response->array([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60 * 24
+            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
         ]);
     }
 }

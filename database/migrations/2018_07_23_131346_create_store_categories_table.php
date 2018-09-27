@@ -17,7 +17,6 @@ class CreateStoreCategoriesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('pid');
             $table->unsignedInteger('shop_id');
-            $table->foreign('shop_id')->references('id')->on('store_shops')->onDelete('cascade');
             $table->string('name');
             $table->tinyInteger('status');
             $table->timestamps();
