@@ -85,6 +85,10 @@ $api->version('v1', [
         // 发布分类文章
         $api->post('categories/{category}/articles', 'ArticlesController@store')
             ->name('api.categories.articles.index');
+
+        //定位
+        $api->get('location/locate', 'LocationController@locate')->name('api.location.locate');
+        $api->get('location/search', 'LocationController@search')->name('api.location.search');
     });
 
     // 广告接口
@@ -131,8 +135,16 @@ $api->version('v1', [
         // 店铺优惠券详情
         $api->get('shops/{shop}/coupons/{coupon}', 'ShopCouponsController@show')
             ->name('api.shop.coupons.show');
-
-
+        //我想买
+        //求购大厅
+        $api->get('wants', 'WantsController@index')
+            ->name('api.wants.index');
+        //新增求购
+        $api->post('wants', 'WantsController@store')
+            ->name('api.wants.store');
+        //查看求购详情
+        $api->get('wants/{want}', 'WantsController@show')
+            ->name('api.wants.show');
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
             // 用户的收藏
@@ -220,6 +232,9 @@ $api->version('v1', [
             // 图片资源
             $api->post('images', 'ImagesController@store')
                 ->name('api.images.store');
+            // 普通文件资源
+            $api->post('files', 'FilesController@store')
+                ->name('api.files.store');
             // 发布话题
             $api->post('topics', 'TopicsController@store')
                 ->name('api.topics.store');

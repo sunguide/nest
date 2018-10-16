@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-//todo 未涉及完成
 
 class CreateStoreWantsTable extends Migration
 {
@@ -19,7 +18,7 @@ class CreateStoreWantsTable extends Migration
             $table->unsignedInteger('user_id')->index()->comment("用户id");
             $table->unsignedInteger('category_id')->index()->comment('分类id');
             $table->string('name')->index()->comment('品牌名称');
-            $table->date('deadline')->comment('求购截止时间');
+            $table->integer('deadline')->comment('求购截止时间');
             $table->string('requirement', 500)->comment('货品要求');
             $table->text('specification')->comment('货品要求');
             $table->unsignedInteger('amount')->comment('需要数量');
@@ -37,6 +36,6 @@ class CreateStoreWantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_brands');
+        Schema::dropIfExists('store_wants');
     }
 }

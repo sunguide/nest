@@ -15,6 +15,7 @@ class ImagesController extends Controller
         $user = $this->user();
 
         $size = $request->type == 'avatar' ? 362 : 1024;
+        $size = false;//dev
         $result = $uploader->save($request->image, str_plural($request->type), $user->id, $size);
         $image = new Image();
         $image->path = $result['path'];
