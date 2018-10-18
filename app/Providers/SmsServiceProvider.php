@@ -5,7 +5,7 @@ namespace App\Providers;
 use Overtrue\EasySms\EasySms;
 use Illuminate\Support\ServiceProvider;
 
-class SmsServiceProvicer extends ServiceProvider
+class SmsServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.

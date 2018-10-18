@@ -79,6 +79,9 @@ $api->version('v1', [
             ->name('api.feedbacks.store');
 
         // 获取分类文章列表
+        $api->get('articles', 'ArticlesController@index')
+            ->name('api.articles.index');
+        // 获取分类文章列表
         $api->get('categories/{category}/articles', 'ArticlesController@index')
             ->name('api.categories.articles.index');
 
@@ -115,12 +118,20 @@ $api->version('v1', [
         'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 游客可以访问的接口
-        // 获取店铺列表
+
+        // 商品分类
+        $api->get('categories/product', 'CategoriesController@product')
+            ->name('api.categories.product');
+
+        // 搜索店铺
         $api->get('store/shops', 'ShopsController@index')
             ->name('api.shops.index');
         // 店铺详情
         $api->get('store/shops/{shop}', 'ShopsController@show')
             ->name('api.shops.show');
+        // 搜索商品
+        $api->get('store/products', 'ProductsController@index')
+            ->name('api.products.index');
 
         // 获取店铺商品列表
         $api->get('store/shops/{shop}/products', 'ProductsController@index')
@@ -128,6 +139,13 @@ $api->version('v1', [
         // 店铺详商品情
         $api->get('store/shop/products/{product}', 'ProductsController@show')
             ->name('api.shops.product.show');
+
+        // 商品评价列表
+        $api->get('products/{product}/reviews', 'ProductReviewsController@index')
+            ->name('api.products.reviews.index');
+        // 商品评价详情
+        $api->get('product/reviews/{review}', 'ProductReviewsController@show')
+            ->name('api.products.reviews.show');
 
         // 店铺优惠券列表
         $api->get('shops/{shop}/coupons', 'ShopCouponsController@index')
@@ -182,10 +200,13 @@ $api->version('v1', [
             $api->post('shops/{shop}/coupons', 'ShopCouponsController@store')
                 ->name('api.shop.coupons.show');
 
-
+            // 新增商品评价
+            $api->post('products/{product}/reviews', 'ProductReviewsController@store')
+                ->name('api.products.reviews.store');
         });
     });
 
+    //用户接口+其他
     $api->group([
         'middleware' => 'api.throttle',
         'limit' => config('api.rate_limits.access.limit'),
@@ -215,9 +236,13 @@ $api->version('v1', [
         // 活跃用户
         $api->get('actived/users', 'UsersController@activedIndex')
             ->name('api.actived.users.index');
+        // 当前其他用户信息
+        $api->get('users/{user}', 'UsersController@show')
+            ->name('api.users.show');
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
+
             // 当前登录用户信息
             $api->get('user', 'UsersController@me')
                 ->name('api.user.show');

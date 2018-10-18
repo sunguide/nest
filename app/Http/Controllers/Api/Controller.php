@@ -34,6 +34,7 @@ class Controller extends BaseController
         if($meta){
             $data['meta'] = $meta;
         }
+        $headers['Content-Type'] = ':application/json';
         return new Response(json_encode($data), $status, $headers);
     }
 }

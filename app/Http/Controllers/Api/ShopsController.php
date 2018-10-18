@@ -23,18 +23,23 @@ class ShopsController extends Controller
     {
         // 创建一个查询构造器
         $builder = Shop::query()->where('on_sale', true);
-        // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
-        // search 参数用来模糊搜索商品
-        if ($search = $request->input('search', '')) {
+        // 判断是否有提交 keywords 参数，如果有就赋值给 $keywords 变量
+        // keywords 参数用来模糊搜索店铺
+        if ($search = $request->input('keywords', '')) {
             $like = '%'.$search.'%';
-            // 模糊搜索商品标题、商品详情、SKU 标题、SKU描述
             $builder->where(function ($query) use ($like) {
                 $query->where('name', 'like', $like);
             });
         }
 
+        // order 参数用来排序
+        if ($order = $request->input('order', '')) {
+            $order = explode("|",$order);
+            $builder = $builder->orderBy($order[0], $order[1]?:'asc');
+        }
 
-        $shops = $builder->paginate(16);
+
+        $shops = $builder->paginate(10);
 
         return $this->response->paginator($shops, new ShopTransformer());
     }

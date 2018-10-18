@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 
 class ShopTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['user'];
+    protected $availableIncludes = ['user','products'];
 
     public function transform(Shop $shop)
     {
@@ -32,7 +32,6 @@ class ShopTransformer extends TransformerAbstract
             'view_count' => (int) $shop->view_count,
             'favorite_count' => (int) $shop->favorite_count,
             'product_count' => (int) $shop->product_count,
-            'products' => $shop->products,//商品
             'rating' => $shop->rating,
             'created_at' => $shop->created_at->toDateTimeString(),
             'updated_at' => $shop->updated_at->toDateTimeString(),
@@ -42,5 +41,9 @@ class ShopTransformer extends TransformerAbstract
     public function includeUser(Shop $shop)
     {
         return $this->item($shop->user, new UserTransformer());
+    }
+
+    public function includeProducts(Shop $shop){
+        return $shop->products;
     }
 }

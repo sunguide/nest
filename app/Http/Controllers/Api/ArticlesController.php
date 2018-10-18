@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\ArticleRequest;
-use App\Http\Requests\Api\CategoryRequest;
-use App\Http\Requests\Api\FeedbackRequest;
+use App\Http\Requests\Request;
 use App\Models\Article;
 use App\Models\Category;
 use App\Transformers\ArticleTransformer;
 
 class ArticlesController extends Controller
 {
-    public function index(Category $category, Article $article)
+    public function index(Request $request, Category $category, Article $article)
     {
-        $articles = $article->where('category_id', $category->id)->paginate(10);
+        $categoryId = $category?$category->id:'';
+        if($request->category){
+            $categoryId = $category->getIdByAlias($request->category);
+        }
+        $articles = $article->where('category_id', $categoryId)->paginate(10);
 
         return $this->response->paginator($articles, new ArticleTransformer());
     }

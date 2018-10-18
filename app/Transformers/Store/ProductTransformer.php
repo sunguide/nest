@@ -7,12 +7,14 @@ use League\Fractal\TransformerAbstract;
 
 class ProductTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [];
+    protected $availableIncludes = ['shop'];
+    protected $defaultIncludes = [];
 
     public function transform(Product $product)
     {
         return [
             'id' => $product->id,
+            'category_id' => $product->category_id,
             'shop_id' => $product->shop_id,
             'title' => $product->title,
             'description' => $product->description,
@@ -26,5 +28,11 @@ class ProductTransformer extends TransformerAbstract
             'created_at' => $product->created_at->toDateTimeString(),
             'updated_at' => $product->updated_at->toDateTimeString(),
         ];
+    }
+
+    public function includeShop(Product $product)
+    {
+        $item = $this->primitive($product->shop, new ShopTransformer());
+        return $item;
     }
 }

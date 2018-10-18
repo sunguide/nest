@@ -32,7 +32,7 @@ class ArticleTransformer extends TransformerAbstract
     public function includeUser(Article $article)
     {
         if($article->user){
-            return $this->item($article->user, new UserTransformer());
+            return $this->primitive($article->user, new UserTransformer());
         }
     }
 

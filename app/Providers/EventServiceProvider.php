@@ -37,6 +37,9 @@ class EventServiceProvider extends ServiceProvider
         'eloquent.created: Illuminate\Notifications\DatabaseNotification' => [
             'App\Listeners\PushNotification',
         ],
+        'Illuminate\Database\Events\QueryExecuted' => [
+            'App\Listeners\QueryLogTrackerListener',
+        ]
     ];
 
     /**

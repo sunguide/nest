@@ -23,19 +23,39 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         // 创建一个查询构造器
-        $builder = Product::query()->where('on_sale', true)->where('shop_id','=', $request->shop);
+        $builder = Product::query()->where('on_sale', true);
+        if($request->shop){
+            $builder = $builder->where('shop_id','=', $request->shop);
+        }
+        if($request->category_id){
+            $builder = $builder->where('category_id', $request->category_id);
+        }
         // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
         // search 参数用来模糊搜索商品
-        if ($search = $request->input('search', '')) {
+        if ($search = $request->input('keywords', '')) {
             $like = '%'.$search.'%';
             // 模糊搜索商品标题、商品详情、SKU 标题、SKU描述
             $builder->where(function ($query) use ($like) {
-                $query->where('name', 'like', $like);
+                $query->where('title', 'like', $like);
+                $query->where('description', 'like', $like);
             });
         }
 
+        if($request->order){
+            $order = $request->order;
+            $orderway = $request->orderway?:"desc";
+            switch ($request->order){
+                case 'sold_count':
+                case 'price':
+                    break;
+                case 'synthesis':
+                default:
+            }
+            $builder = $builder->orderBy($order, $orderway);
+        }
 
-        $products = $builder->paginate(16);
+
+        $products = $builder->paginate(10);
 
         return $this->response->paginator($products, new ProductTransformer());
     }
