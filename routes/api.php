@@ -133,6 +133,10 @@ $api->version('v1', [
         $api->get('store/products', 'ProductsController@index')
             ->name('api.products.index');
 
+        // 获取店铺分类列表
+        $api->get('store/shops/{shop}/categories', 'ShopCategoriesController@index')
+            ->name('api.shops.categories.index');
+
         // 获取店铺商品列表
         $api->get('store/shops/{shop}/products', 'ProductsController@index')
             ->name('api.shops.product.index');
@@ -203,6 +207,18 @@ $api->version('v1', [
             // 新增商品评价
             $api->post('products/{product}/reviews', 'ProductReviewsController@store')
                 ->name('api.products.reviews.store');
+
+            // 新增店铺分类
+            $api->post('store/shops/{shop}/categories', 'ShopCategoriesController@store')
+                ->name('api.shops.categories.store');
+            // 更新店铺分类
+            $api->patch('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@update')
+                ->name('api.shops.categories.update');
+            // 删除店铺分类
+            $api->delete('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@destroy')
+                ->name('api.shops.categories.destroy');
+
+
         });
     });
 

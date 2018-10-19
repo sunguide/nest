@@ -55,7 +55,7 @@ class ProductsController extends Controller
         }
 
 
-        $products = $builder->paginate(10);
+        $products = $builder->paginate($request->input("per_page", 10));
 
         return $this->response->paginator($products, new ProductTransformer());
     }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\InternalException;
 use App\Exceptions\InvalidRequestException;
+use App\Http\Requests\Api\ProductCategoryRequest;
 use App\Http\Requests\Api\ProductReviewRequest;
 use App\Models\Store\Categories;
 use App\Models\Store\Product;
 use App\Models\Store\ProductReview;
+use App\Transformers\ProductCategoriesTransformer;
 use App\Transformers\ProductReviewTransformer;
 use Illuminate\Http\Request;
 use App\Models\Store\Shop;
@@ -33,9 +36,9 @@ class ShopCategoriesController extends Controller
             $builder = $builder->orderBy("created_at", "desc");
         }
 
-        $reviews = $builder->paginate(10);
+        $reviews = $builder->get();
 
-        return $this->response->paginator($reviews, new ProductReviewTransformer());
+        return $this->response->collection($reviews, new ProductCategoriesTransformer());
     }
 
     /**
@@ -61,14 +64,40 @@ class ShopCategoriesController extends Controller
      * @apiParam {String} images 评价图片
      * @apiParam {Number} grade 评价等级
      *
-     * @apiSuccess {Object} 评价详情
+     * @apiSuccess {Object} 商品分类
      */
-    public function store(ProductReviewRequest $request,Product $product, ProductReview $productReview)
+    public function store(ProductCategoryRequest $request,Shop $shop, Categories $category)
     {
-        $productReview->fill($request->all());
-        $productReview->product_id = $product->id;
-        $productReview->user_id = $this->user()->id;
-        $productReview->save();
-        return $this->response->item($productReview, new ProductReviewTransformer())->setStatusCode(201);
+        if(!$shop){
+            throw new InternalException("请确定店铺");
+        }
+        $category->fill($request->all());
+        $category->shop_id = $shop->id;
+        $category->save();
+        return $this->response->item($category, new ProductCategoriesTransformer())->setStatusCode(201);
     }
+
+
+    public function update(ProductCategoryRequest $request, Shop $shop, Categories $category)
+    {
+        if($category->shop_id != $shop->id){
+            throw new InternalException("无权限");
+        }
+        $category->update($request->all());
+        return $this->response->item($category, new ProductCategoriesTransformer());
+    }
+
+    public function destroy(Shop $shop, Categories $category)
+    {
+        if(!$shop){
+            throw new InternalException("请确定店铺");
+        }
+        if(!$category){
+            throw new InternalException("请确定分类");
+        }
+        $category->delete();
+        return $this->response->noContent();
+    }
+
+
 }
