@@ -236,9 +236,10 @@ $api->version('v1', [
         // 活跃用户
         $api->get('actived/users', 'UsersController@activedIndex')
             ->name('api.actived.users.index');
-        // 当前其他用户信息
+        // 当前用户信息
         $api->get('users/{user}', 'UsersController@show')
             ->name('api.users.show');
+
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
@@ -289,6 +290,19 @@ $api->version('v1', [
             // 当前登录用户权限
             $api->get('user/permissions', 'PermissionsController@index')
                 ->name('api.user.permissions.index');
+
+            // 获取用户收货地址
+            $api->get('users/{user}/addresses', 'UserAddressesController@index')
+                ->name('api.users.addresses.index');
+            // 新增用户收货地址
+            $api->post('users/{user}/addresses', 'UserAddressesController@store')
+                ->name('api.users.addresses.index');
+            // 修改用户收货地址
+            $api->patch('users/{user}/addresses/{address}', 'UserAddressesController@update')
+                ->name('api.users.addresses.update');
+            // 删除用户收货地址
+            $api->delete('users/{user}/addresses/{address}', 'UserAddressesController@destroy')
+                ->name('api.users.addresses.destroy');
         });
     });
 });

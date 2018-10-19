@@ -28,6 +28,8 @@ class ProductReviewsController extends Controller
             $order = $request->order;
             $orderway = $request->orderway?:"desc";
             $builder = $builder->orderBy($order, $orderway);
+        }else{
+            $builder = $builder->orderBy("created_at", "desc");
         }
 
         $reviews = $builder->paginate(10);
