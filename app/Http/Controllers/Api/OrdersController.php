@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Exceptions\CouponCodeUnavailableException;
+use App\Exceptions\InternalException;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\Api\OrderRequest;
 use App\Models\Coupon;
@@ -83,14 +84,16 @@ class OrdersController extends Controller
      * @Post("/")
      * @Versions({"v1"})
      * @Requests({"address_id":1,"items":["sku_id":1,"amount":1],"remark":"订单备注"})
-     * @Response(200, body={"access_token": "abc..","token_type": "Bearer","expires_in": 3600})
+     * @Response(200, body=)
      */
     public function store(OrderRequest $request, OrderService $orderService)
     {
         $user    = $request->user();
         $address = UserAddress::find($request->input('address_id'));
         $coupon  = null;
-
+        if(!$address){
+            throw  new InternalException("地址不存在");
+        }
         // 如果用户提交了优惠码
         if ($code_id = $request->input('coupon_id')) {
             $coupon = Coupon::find($request->input('coupon_id'));

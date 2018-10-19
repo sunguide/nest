@@ -44,6 +44,6 @@ class ShopTransformer extends TransformerAbstract
     }
 
     public function includeProducts(Shop $shop){
-        return $shop->products;
+        return $this->primitive($shop->products);
     }
 }
