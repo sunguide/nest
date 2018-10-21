@@ -2,6 +2,7 @@
 
 namespace App\Models\Store;
 
+use App\Models\Coupon;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 use App\Models\CouponCode;
@@ -92,6 +93,10 @@ class Order extends Model
     public function couponCode()
     {
         return $this->belongsTo(CouponCode::class);
+    }
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
     
     public static function findAvailableNo()

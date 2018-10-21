@@ -79,20 +79,36 @@ class Coupon extends Model
             throw new CouponCodeUnavailableException('订单金额不满足该优惠券最低金额');
         }
 
-        $used = Order::where('user_id', $user->id)
+        $has = $user->hasCoupon($this);
+        if(!$has){
+            throw new CouponCodeUnavailableException('未获得此优惠券');
+        }
+
+        //查看优惠券是否已经被使用v1
+        //一个优惠券只能用一次
+//        $used = Store\Order::where('user_id', $user->id)
+//            ->where('coupon_id', $this->id)
+//            ->where(function($query) {
+//                $query->where(function($query) {
+//                    $query->whereNull('paid_at')
+//                        ->where('closed', false);
+//                })->orWhere(function($query) {
+//                    $query->whereNotNull('paid_at')
+//                        ->where('refund_status', Store\Order::REFUND_STATUS_PENDING);
+//                });
+//            })
+//            ->exists();
+//        if ($used) {
+//            throw new CouponCodeUnavailableException('你已经使用过这张优惠券了');
+//        }
+        //查看优惠券是否已经被使用v2
+        //一个优惠券可以使用多次
+        $unused = UserCoupon::query()->where('user_id', $user->id)
             ->where('coupon_id', $this->id)
-            ->where(function($query) {
-                $query->where(function($query) {
-                    $query->whereNull('paid_at')
-                        ->where('closed', false);
-                })->orWhere(function($query) {
-                    $query->whereNotNull('paid_at')
-                        ->where('refund_status', Store\Order::REFUND_STATUS_PENDING);
-                });
-            })
-            ->exists();
-        if ($used) {
-            throw new CouponCodeUnavailableException('你已经使用过这张优惠券了');
+            ->where('enabled', 1)
+            ->where("used", 0)->exists();
+        if(!$unused){
+            throw new CouponCodeUnavailableException('优惠券失效或者你已经使用过这张优惠券了');
         }
     }
 

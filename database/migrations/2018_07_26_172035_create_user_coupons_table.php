@@ -20,7 +20,8 @@ class CreateUserCouponsTable extends Migration
             $table->unsignedInteger('coupon_id');
             $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
             $table->string('extra',1000)->nullable();
-            $table->boolean('enabled')->default(1);
+            $table->boolean('enabled')->default(1)->index();
+            $table->boolean('used')->default(0)->index();
             $table->timestamps();
         });
     }

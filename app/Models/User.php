@@ -56,6 +56,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(UserCoupon::class);
     }
 
+    //是否拥有优惠券
+    public function hasCoupon($coupon)
+    {
+        return UserCoupon::query()->where("user_id", $this->id)->where("coupon_id", $coupon->id)->where("enabled", 1)->first();
+    }
+
+
     //我的收藏
     public function favorites()
     {

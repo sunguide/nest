@@ -180,14 +180,14 @@ $api->version('v1', [
             $api->delete('user/favorites', 'UserFavoritesController@destroy');
 
             // 订单列表
-            $api->get('orders', 'OrdersController@index')
-                ->name('api.orders.index');
+            $api->get('store/orders', 'OrdersController@index')
+                ->name('api.store.orders.index');
             // 创建订单
-            $api->post('orders', 'OrdersController@store')
-                ->name('api.orders.store');
+            $api->post('store/orders', 'OrdersController@store')
+                ->name('api.store.orders.store');
             // 订单详情
-            $api->get('orders/{order}', 'OrdersController@show')
-                ->name('api.orders.show');
+            $api->get('store/orders/{order}', 'OrdersController@show')
+                ->name('api.store.orders.show');
 
 
             // 我的优惠券列表
@@ -218,6 +218,15 @@ $api->version('v1', [
             $api->delete('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@destroy')
                 ->name('api.shops.categories.destroy');
 
+            // 加入购物车
+            $api->post('store/cart/products', 'ShopCategoriesController@store')
+                ->name('api.store.cart.products.store');
+            // 更新购物车商品
+            $api->patch('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@update')
+                ->name('api.shops.categories.update');
+            // 移除购物车
+            $api->delete('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@destroy')
+                ->name('api.shops.categories.destroy');
 
         });
     });

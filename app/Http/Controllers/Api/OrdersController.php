@@ -44,18 +44,25 @@ class OrdersController extends Controller
         $userId = \Auth::guard('api')->id();
         // 创建一个查询构造器
         $builder = Order::query()
+            ->select("store_orders.*")
             ->with(['items.product', 'items.productSku'])
             ->where('user_id', $userId);
-        // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
-        // search 参数用来模糊搜索商品
-        if ($search = $request->input('search', '')) {
-            $like = '%'.$search.'%';
+        if($request->input("no")){
+            $builder = $builder->where("no", $request->input("no"));
+        }
+        // 判断是否有提交 keywords 参数，如果有就赋值给 $keywords 变量
+        // keywords 参数用来模糊搜索商品
+        if ($keywords = $request->input('keywords', '')) {
+            $like = '%'.$keywords.'%';
             // 模糊搜索商品标题、商品详情、SKU 标题、SKU描述
+            $builder->leftJoin('store_order_items','store_order_items.order_id','=','store_orders.id');
+            $builder->leftJoin('store_products','store_products.id','=','store_order_items.product_id');
+
             $builder->where(function ($query) use ($like) {
-                $query->where('name', 'like', $like);
+                $query->where('store_products.title', 'like', $like);
             });
         }
-        $orders = $builder->paginate($request->input("limit", 10));
+        $orders = $builder->paginate($request->input("per_page", 10));
 
         return $this->response->paginator($orders, new OrderTransformer());
     }
@@ -83,7 +90,7 @@ class OrdersController extends Controller
      *
      * @Post("/")
      * @Versions({"v1"})
-     * @Requests({"address_id":1,"items":["sku_id":1,"amount":1],"remark":"订单备注"})
+     * @Requests({"address_id":1,"items":[{"sku_id":1,"amount":1}],"remark":"订单备注"})
      * @Response(200, body=)
      */
     public function store(OrderRequest $request, OrderService $orderService)
@@ -93,6 +100,8 @@ class OrdersController extends Controller
         $coupon  = null;
         if(!$address){
             throw  new InternalException("地址不存在");
+        }else if($address->user_id != $user->id){
+            throw  new InternalException("地址有误");
         }
         // 如果用户提交了优惠码
         if ($code_id = $request->input('coupon_id')) {
