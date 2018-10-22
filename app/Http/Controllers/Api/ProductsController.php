@@ -30,6 +30,9 @@ class ProductsController extends Controller
         if($request->category_id){
             $builder = $builder->where('category_id', $request->category_id);
         }
+        if($request->shop_category_id){
+            $builder = $builder->where('shop_category_id', $request->shop_category_id);
+        }
         // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
         // search 参数用来模糊搜索商品
         if ($search = $request->input('keywords', '')) {

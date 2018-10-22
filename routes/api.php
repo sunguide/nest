@@ -315,19 +315,14 @@ $api->version('v1', [
             // 当前登录用户权限
             $api->get('user/permissions', 'PermissionsController@index')
                 ->name('api.user.permissions.index');
-
             // 获取用户收货地址
-            $api->get('users/{user}/addresses', 'UserAddressesController@index')
-                ->name('api.users.addresses.index');
+            $api->get('users/{user}/addresses', 'UserAddressesController@index')->name('api.users.addresses.index');
             // 新增用户收货地址
-            $api->post('users/{user}/addresses', 'UserAddressesController@store')
-                ->name('api.users.addresses.index');
+            $api->post('users/{user}/addresses', 'UserAddressesController@store')->name('api.users.addresses.index');
             // 修改用户收货地址
-            $api->patch('users/{user}/addresses/{address}', 'UserAddressesController@update')
-                ->name('api.users.addresses.update');
+            $api->patch('users/{user}/addresses/{address}', 'UserAddressesController@update')->name('api.users.addresses.update');
             // 删除用户收货地址
-            $api->delete('users/{user}/addresses/{address}', 'UserAddressesController@destroy')
-                ->name('api.users.addresses.destroy');
+            $api->delete('users/{user}/addresses/{address}', 'UserAddressesController@destroy')->name('api.users.addresses.destroy');
         });
     });
 });
