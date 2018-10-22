@@ -13,13 +13,13 @@ class ProductReviewTransformer extends TransformerAbstract
     {
         return [
             'id' => $review->id,
-            'user_id' => $review->user_id,
-            'product_id' => $review->product_id,
-            'sku_id' => $review->sku_id,
+            'user_id' => (int) $review->user_id,
+            'product_id' => (int) $review->product_id,
+            'sku_id' => (int) $review->sku_id,
             'content' => $review->content,
-            'images' =>  $review->images,
-            'grade' => $review->grade,
-            'is_anonymous' => $review->is_anonymous,
+            'images' =>  strval($review->images),
+            'grade' => floatval($review->grade),
+            'is_anonymous' => boolval($review->is_anonymous),
             'created_at' => $review->created_at->toDateTimeString(),
             'updated_at' => $review->updated_at->toDateTimeString(),
         ];

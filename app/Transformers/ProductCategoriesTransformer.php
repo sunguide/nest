@@ -13,9 +13,9 @@ class ProductCategoriesTransformer extends TransformerAbstract
     {
         return [
             'id' => $category->id,
-            'pid' => $category->pid,
-            'shop_id' => $category->shop_id,
-            'name' => $category->name
+            'pid' => intval($category->pid),
+            'shop_id' => intval($category->shop_id),
+            'name' => strval($category->name)
         ];
     }
 }

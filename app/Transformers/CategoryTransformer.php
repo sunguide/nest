@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Category;
+use function GuzzleHttp\Psr7\str;
 use League\Fractal\TransformerAbstract;
 
 class CategoryTransformer extends TransformerAbstract
@@ -13,8 +14,8 @@ class CategoryTransformer extends TransformerAbstract
             'id' => $category->id,
             'pid' => intval($category->pid),
             'name' => $category->name,
-            'description' => $category->description,
-            'alias' => $category->alias
+            'description' => strval($category->description),
+            'alias' => strval($category->alias)
         ];
     }
 }

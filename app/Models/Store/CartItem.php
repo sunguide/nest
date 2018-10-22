@@ -8,7 +8,7 @@ use App\Models\User;
 class CartItem extends Model
 {
     protected $table = "store_cart_items";
-    protected $fillable = ['amount'];
+    protected $fillable = ['user_id', 'product_sku_id', 'amount'];
     public $timestamps = false;
 
     public function user()
@@ -19,5 +19,11 @@ class CartItem extends Model
     public function productSku()
     {
         return $this->belongsTo(ProductSku::class);
+    }
+
+    public function product()
+    {
+        $produtSku = $this->belongsTo(ProductSku::class);
+        return $produtSku->belongsTo(ProductSku::class);
     }
 }
