@@ -44,7 +44,7 @@ class ShopCouponsController extends Controller
      * @Post("/")
      * @Versions({"v1"})
      * @Request({"coupon_id": "1"})
-     * @Response(200, body={"data":{"id":9,"shop_id":1015,"coupon_id":"1","extra":null,"enable":null,"coupon":{"data":{"id":1,"name":"5元优惠券","description":"满10减5","type":"fixed","value":"5.00","min_amount":"10.00","created_at":"-0001-11-30 00:00:00"}}}})
+     * @Response(200, body={"data":{"id":9,"shop_id":1015,"coupon_id":"1","extra":null,"enable":null,"coupon":{"id":1,"name":"5元优惠券","description":"满10减5","type":"fixed","value":"5.00","min_amount":"10.00","created_at":"-0001-11-30 00:00:00"}}})
      */
     public function store(ShopCouponRequest $request, Shop $shop, ShopCoupon $shopCoupon, Coupon $coupon)
     {

@@ -33,10 +33,10 @@ class ProductsController extends Controller
         if($request->shop_category_id){
             $builder = $builder->where('shop_category_id', $request->shop_category_id);
         }
-        // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
-        // search 参数用来模糊搜索商品
-        if ($search = $request->input('keywords', '')) {
-            $like = '%'.$search.'%';
+        // 判断是否有提交 keywords 参数，如果有就赋值给 $keywords 变量
+        // $keywords 参数用来模糊搜索商品
+        if ($keywords = $request->input('keywords', '')) {
+            $like = '%'.$keywords.'%';
             // 模糊搜索商品标题、商品详情、SKU 标题、SKU描述
             $builder->where(function ($query) use ($like) {
                 $query->where('title', 'like', $like);
@@ -53,6 +53,7 @@ class ProductsController extends Controller
                     break;
                 case 'synthesis':
                 default:
+                    $order="review_count";
             }
             $builder = $builder->orderBy($order, $orderway);
         }
@@ -105,8 +106,7 @@ class ProductsController extends Controller
         return [];
     }
 
-    public function disfavor(Shop
-                             $shop, Request $request)
+    public function disfavor(Shop $shop, Request $request)
     {
         $user = $request->user();
         $user->favoriteProducts()->detach($shop);
@@ -116,7 +116,7 @@ class ProductsController extends Controller
 
     public function favorites(Request $request)
     {
-        $products = $request->user()->favoriteProducts()->paginate(16);
+        $products = $request->user()->favoriteProducts()->paginate($request->input("per_page"));
 
         return view('products.favorites', ['products' => $products]);
     }

@@ -29,14 +29,14 @@ class FeedbackTransformer extends TransformerAbstract
     public function includeUser(Feedback $feedback)
     {
         if($feedback->user){
-            return $this->item($feedback->user, new UserTransformer());
+            return $this->primitive($feedback->user, new UserTransformer());
         }
     }
 
     public function includeCategory(Feedback $feedback)
     {
         if($feedback->category) {
-            return $this->item($feedback->category, new CategoryTransformer());
+            return $this->primitive($feedback->category, new CategoryTransformer());
         }
     }
 }

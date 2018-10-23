@@ -218,15 +218,14 @@ $api->version('v1', [
             $api->delete('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@destroy')
                 ->name('api.shops.categories.destroy');
 
+            // 查看购物车
+            $api->get('store/cart', 'CartController@index')->name('api.store.cart.products.index');
             // 加入购物车
-            $api->post('store/cart/products', 'ShopCategoriesController@store')
-                ->name('api.store.cart.products.store');
+            $api->post('store/cart', 'CartController@store')->name('api.store.cart.products.store');
             // 更新购物车商品
-            $api->patch('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@update')
-                ->name('api.shops.categories.update');
+            $api->patch('store/cart', 'CartController@update')->name('api.shops.categories.update');
             // 移除购物车
-            $api->delete('store/shops/{shop}/categories/{category}', 'ShopCategoriesController@destroy')
-                ->name('api.shops.categories.destroy');
+            $api->delete('store/cart', 'CartController@destroy')->name('api.shops.categories.destroy');
 
         });
     });

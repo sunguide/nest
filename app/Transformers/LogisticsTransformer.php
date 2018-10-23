@@ -40,7 +40,7 @@ class LogisticsTransformer extends TransformerAbstract
     public function includeOrder(Logistics $logistics)
     {
         if($logistics->order){
-            return $this->item($logistics->order, new OrderTransformer());
+            return $this->primitive($logistics->order, new OrderTransformer());
         }
     }
 }

@@ -27,13 +27,13 @@ class UserFavoritesTransformer extends TransformerAbstract
 
     public function includeUser(UserFavorite $userFavorite)
     {
-        return $this->item($userFavorite->user, new UserTransformer());
+        return $this->primitive($userFavorite->user, new UserTransformer());
     }
 
     public function includeProduct(UserFavorite $userFavorite)
     {
         if($userFavorite->product){
-            return $this->item($userFavorite->product, new ProductTransformer());
+            return $this->primitive($userFavorite->product, new ProductTransformer());
         }
     }
 }

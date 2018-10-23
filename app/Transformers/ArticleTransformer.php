@@ -39,7 +39,7 @@ class ArticleTransformer extends TransformerAbstract
     public function includeCategory(Article $article)
     {
         if($article->category) {
-            return $this->item($article->category, new CategoryTransformer());
+            return $this->primitive($article->category, new CategoryTransformer());
         }
     }
 }

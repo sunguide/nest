@@ -24,11 +24,11 @@ class UserCouponTransformer extends TransformerAbstract
 
     public function includeUser(UserCoupon $userCoupon)
     {
-        return $this->item($userCoupon->user, new UserTransformer());
+        return $this->primitive($userCoupon->user, new UserTransformer());
     }
 
     public function includeCoupon(UserCoupon $userCoupon)
     {
-        return $this->item($userCoupon->coupon, new CouponTransformer(), 'coupon');
+        return $this->primitive($userCoupon->coupon, new CouponTransformer(), 'coupon');
     }
 }

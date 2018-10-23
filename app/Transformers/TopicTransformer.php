@@ -29,11 +29,11 @@ class TopicTransformer extends TransformerAbstract
 
     public function includeUser(Topic $topic)
     {
-        return $this->item($topic->user, new UserTransformer());
+        return $this->primitive($topic->user, new UserTransformer());
     }
 
     public function includeCategory(Topic $topic)
     {
-        return $this->item($topic->category, new CategoryTransformer());
+        return $this->primitive($topic->category, new CategoryTransformer());
     }
 }

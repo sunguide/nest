@@ -15,7 +15,7 @@ class ShopCouponRequest extends FormRequest
             case 'POST':
                 return [
                     'name' => 'required',
-                    'description' => 'required',
+//                    'description' => 'required',
                     'type' => 'required',
                     'total' => ['required', 'integer', 'min:1'],
                     'value' => 'required',

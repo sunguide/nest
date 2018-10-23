@@ -18,18 +18,18 @@ class ShopCouponTransformer extends TransformerAbstract
             'id' => $shopCoupon->id,
             'shop_id' => $shopCoupon->shop_id,
             'coupon_id' => $shopCoupon->coupon_id,
-            'extra' => $shopCoupon->extra,
-            'enable' => $shopCoupon->enable
+            'enabled' => true,
+            'extra' => $shopCoupon->extra
         ];
     }
 
     public function includeShop(ShopCoupon $shopCoupon)
     {
-        return $this->item($shopCoupon->shop, new UserTransformer());
+        return $this->primitive($shopCoupon->shop, new UserTransformer());
     }
 
     public function includeCoupon(ShopCoupon $shopCoupon)
     {
-        return $this->item($shopCoupon->coupon, new CouponTransformer(), 'coupon');
+        return $this->primitive($shopCoupon->coupon, new CouponTransformer(), 'coupon');
     }
 }
