@@ -21,6 +21,7 @@ class CreateStoreShopsTable extends Migration
             $table->string('logo')->nullable();
             $table->string('images')->nullable();
             $table->text('introduce');
+            $table->string('business_scope', 500)->default('');
             $table->string('address',200)->nullable();
             $table->string('contact')->nullable();
             $table->string('telphone')->nullable();

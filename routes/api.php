@@ -140,7 +140,7 @@ $api->version('v1', [
         // 获取店铺商品列表
         $api->get('store/shops/{shop}/products', 'ProductsController@index')
             ->name('api.shops.product.index');
-        // 店铺详商品情
+        // 店铺商品详情
         $api->get('store/shop/products/{product}', 'ProductsController@show')
             ->name('api.shops.product.show');
 
@@ -169,6 +169,8 @@ $api->version('v1', [
             ->name('api.wants.show');
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
+            // 店铺详情
+            $api->get('store/my/shop', 'UsersController@shop')->name('api.users.shop');
             // 用户的收藏
             $api->get('user/favorites', 'UserFavoritesController@index');
             // 用户收藏

@@ -19,6 +19,7 @@ class ShopTransformer extends TransformerAbstract
             'logo' => $shop->logo,
             'images' => $shop->images,
             'introduce' => $shop->introduce,
+            'business_scope' => $shop->business_scope,
             'address' => $shop->address,
             'contact' => $shop->contact,
             'telphone' => $shop->telphone,

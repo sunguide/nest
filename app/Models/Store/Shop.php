@@ -23,6 +23,7 @@ class Shop extends Model
     protected $fillable = [
         'name',
         'introduce',
+        'business_scope',
         'images',
         'on_sale',
         'rating',

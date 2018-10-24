@@ -17,6 +17,20 @@ class UserAuthentication extends Model
     ];
     protected $dates = [];
 
+
+    const STATUS_PENDING = 'pending';
+    const STATUS_APPLIED = 'applied';
+    const STATUS_PROCESSING = 'processing';
+    const STATUS_SUCCESS = 'success';
+    const STATUS_FAILED = 'failed';
+    public static $statusMap = [
+        self::STATUS_PENDING   => '未认证',
+        self::STATUS_APPLIED => '已申请认证',
+        self::STATUS_PROCESSING  => '处理中',
+        self::STATUS_SUCCESS => '认证通过',
+        self::STATUS_FAILED => '认证失败'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

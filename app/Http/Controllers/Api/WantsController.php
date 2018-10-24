@@ -50,8 +50,7 @@ class WantsController extends Controller
 
         // order 参数用来排序
         if ($order = $request->input('order', '')) {
-            $order = explode("|",$order);
-            $builder = $builder->orderBy($order[0], $order[1]?:'asc');
+            $builder = $builder->orderBy($order, $request->input('orderway'));
         }
 
         $wants = $builder->paginate(10);

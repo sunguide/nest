@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Middleware\VerifyCaptcha;
+use App\Models\Store\Shop;
 use App\Models\User;
 use App\Models\Image;
 use App\Services\UserService;
+use App\Transformers\Store\ShopTransformer;
 use Illuminate\Http\Request;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
@@ -127,5 +129,11 @@ class UsersController extends Controller
     public function activedIndex(User $user)
     {
         return $this->response->collection($user->getActiveUsers(), new UserTransformer());
+    }
+
+    //获取我的店铺
+    public function shop(){
+        $shop = Shop::query()->where("user_id", $this->user()->id)->first();
+        return $this->response->item($shop, new ShopTransformer());
     }
 }

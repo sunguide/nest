@@ -15,10 +15,10 @@ class UserCouponTransformer extends TransformerAbstract
     {
         return [
             'id' => $userCoupon->id,
-            'user_id' => $userCoupon->user_id,
-            'coupon_id' => $userCoupon->coupon_id,
+            'user_id' => intval($userCoupon->user_id),
+            'coupon_id' => intval($userCoupon->coupon_id),
             'extra' => $userCoupon->extra,
-            'enable' => $userCoupon->enable
+            'enable' => boolval($userCoupon->enable)
         ];
     }
 
