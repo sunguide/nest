@@ -18,14 +18,14 @@ class UserAuthentication extends Model
     protected $dates = [];
 
 
-    const STATUS_PENDING = 'pending';
-    const STATUS_APPLIED = 'applied';
-    const STATUS_PROCESSING = 'processing';
-    const STATUS_SUCCESS = 'success';
-    const STATUS_FAILED = 'failed';
+    const STATUS_PENDING = 0;
+    const STATUS_APPLIED = 1;
+    const STATUS_PROCESSING = 2;
+    const STATUS_SUCCESS = 3;
+    const STATUS_FAILED = 4;
     public static $statusMap = [
         self::STATUS_PENDING   => '未认证',
-        self::STATUS_APPLIED => '已申请认证',
+        self::STATUS_APPLIED => '已申请认证,待审核',
         self::STATUS_PROCESSING  => '处理中',
         self::STATUS_SUCCESS => '认证通过',
         self::STATUS_FAILED => '认证失败'
@@ -57,7 +57,7 @@ class UserAuthentication extends Model
         $count = UserAuthentication::query()
             ->where('user_id', $userId)
             ->where('type', $type)
-            ->where('status', 1)
+            ->where('status', self::STATUS_SUCCESS)
             ->count();
         if ($count) {
             return true;
@@ -68,15 +68,29 @@ class UserAuthentication extends Model
     public function getVerifiedAuthentications($userId){
         $authenticationItems = UserAuthentication::query()
             ->where('user_id', $userId)
-            ->where('status', 1)
+            ->where('status', self::STATUS_SUCCESS)
+            ->get();
+        return $authenticationItems;
+    }
+
+    public function getAuthentications($userId){
+        $authenticationItems = UserAuthentication::query()
+            ->where('user_id', $userId)
             ->get();
         return $authenticationItems;
     }
 
     public function setVerified($id){
         if($id){
-            return $this->find($id)->update("status", 1);
+            return $this->find($id)->update("status", self::STATUS_SUCCESS);
         }
         return false;
+    }
+
+    public function getStatusDesc($status){
+        if(static::$statusMap[$status]){
+            return static::$statusMap[$status];
+        }
+        return "未知";
     }
 }

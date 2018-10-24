@@ -21,11 +21,12 @@ class UserAuthenticationController extends Controller
     public function index(IRequest $request, UserAuthentication $userAuthentication)
     {
         $authentications = [];
-        $items = $userAuthentication->getVerifiedAuthentications($this->user()->id);
+        $items = $userAuthentication->getAuthentications($this->user()->id);
         $types = ['identity','company', 'qualification', 'field'];
         foreach ($types as $type){
             $authentications[$type] = [
-                'verified' => 0,
+                'status' => UserAuthentication::STATUS_PENDING,
+                'status_desc' => $userAuthentication->getStatusDesc(UserAuthentication::STATUS_PENDING),
             ];
         }
         if($items){
@@ -34,7 +35,8 @@ class UserAuthenticationController extends Controller
                 $authentications[$item->type]['number'] = $item->number;
                 $authentications[$item->type]['front'] = $item->front;
                 $authentications[$item->type]['back'] = $item->back;
-                $authentications[$item->type]['verified'] = 1;
+                $authentications[$item->type]['status'] = $item->status;
+                $authentications[$item->type]['status_desc'] = $item->getStatusDesc($item->status);
                 $authentications[$item->type]['created_at'] = $item->created_at->toDateTimeString();
             }
         }
