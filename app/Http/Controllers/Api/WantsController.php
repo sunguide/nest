@@ -76,7 +76,7 @@ class WantsController extends Controller
         }
         $want->save();
         //attributes
-        $attributes = ['location_id', 'cultivation_type'];
+        $attributes = ['cultivation_type', 'category_variety_id', 'contact_name', 'contact_phone'];
         foreach ($attributes as $k => $key){
             if($request->$key){
                 $want->setAttribute($key, $request->$key);
