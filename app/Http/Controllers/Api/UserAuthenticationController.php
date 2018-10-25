@@ -41,7 +41,7 @@ class UserAuthenticationController extends Controller
             }
         }
 
-        return response()->json($authentications);
+        return response()->json(['data' => $authentications]);
     }
 
     public function store(UserAuthenticationRequest $request, UserAuthentication $userAuthentication)
