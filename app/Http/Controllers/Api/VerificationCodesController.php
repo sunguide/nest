@@ -77,8 +77,10 @@ class VerificationCodesController extends Controller
         //记录当日手机号发送次数
         \Cache::put("sms_send_count_{$currentDay}_{$phone}", $count + 1);
         return $this->response->array([
-            'key' => $key,
-            'expired_at' => $expiredAt->toDateTimeString(),
+            'data' => [
+                'key' => $key,
+                'expired_at' => $expiredAt->toDateTimeString(),
+            ]
         ])->setStatusCode(201);
     }
 }

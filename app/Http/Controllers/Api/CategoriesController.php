@@ -9,9 +9,20 @@ use App\Transformers\CategoryTransformer;
 
 class CategoriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return $this->response->collection(Category::all(), new CategoryTransformer());
+        $builder = Category::query();
+        if($request->input("alias")){
+            $parent = Category::query()->where("alias",$request->input("alias"))->first();
+            if($parent){
+                $builder = $builder->where("pid", $parent->id);
+            }
+        }
+
+        if($request->input("pid")){
+            $builder = $builder->where("pid", $parent->id);
+        }
+        return $this->response->collection($builder->get(), new CategoryTransformer());
     }
 
     public function product()

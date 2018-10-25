@@ -8,19 +8,23 @@ use League\Fractal\TransformerAbstract;
 
 class WantTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['location', 'user', 'category'];
+    protected $defaultIncludes = ['location', 'user', 'category'];
+
     public function transform(Want $want)
     {
         $data = [
-            'id' => $want->id,
-            'user_id' => $want->user_id,
-            'category_id' => $want->category_id,
+            'id' => intval($want->id),
+            'user_id' => intval($want->user_id),
+            'category_id' => intval($want->category_id),
+            'location_id' => intval($want->location_id),
             'name' => $want->name,
-            'deadline' => $want->deadline,
+            'deadline' => intval($want->deadline),
             'requirement' => $want->requirement,
             'specification' => $want->specification,
-            'amount' => $want->amount,
+            'amount' => intval($want->amount),
             'introduction' => $want->introduction,
-            'is_featured' => $want->is_featured,
+            'is_featured' => boolval($want->is_featured),
             'created_at' => $want->created_at?$want->created_at->toDateTimeString():null,
             'updated_at' => $want->updated_at?$want->updated_at->toDateTimeString():null,
         ];
@@ -32,5 +36,22 @@ class WantTransformer extends TransformerAbstract
             }
         }
         return $data;
+    }
+    public function includeLocation(Want $want){
+        if($want->location){
+            return $this->primitive($want->location, new LocationTransformer());
+        }
+    }
+
+    public function includeUser(Want $want){
+        if($want->user){
+            return $this->primitive($want->user, new UserTransformer());
+        }
+    }
+
+    public function includeCategory(Want $want){
+        if($want->category){
+            return $this->primitive($want->category, new CategoryTransformer());
+        }
     }
 }

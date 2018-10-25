@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    protected $fillable = [];
-
+    protected $fillable = [
+        'pid',
+        'node',
+        'name',
+        'level',
+        'lat',
+        'lng'
+    ];
 }

@@ -12,7 +12,8 @@ class LocationTransformer extends TransformerAbstract
 
         return [
             'id' => $location->id,
-            'name' => $location->name,
+            'pid' => intval($location->pid),
+            'name' => strval($location->name),
             'level' => $location->level,
             'lat' => $location->lat,
             'lng' => $location->lng,

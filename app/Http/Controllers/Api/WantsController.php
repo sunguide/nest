@@ -53,7 +53,7 @@ class WantsController extends Controller
             $builder = $builder->orderBy($order, $request->input('orderway'));
         }
 
-        $wants = $builder->paginate(10);
+        $wants = $builder->paginate($request->input("per_page", 10));
 
         return $this->response->paginator($wants, new WantTransformer());
     }

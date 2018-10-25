@@ -112,6 +112,6 @@ class OrdersController extends Controller
         }
 
         $order =  $orderService->store($user, $address, $request->input('remark'), $request->input('items'), $coupon);
-        return $this->response->array($order);
+        return $this->response->array(['data' => $order]);
     }
 }

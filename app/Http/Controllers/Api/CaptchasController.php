@@ -40,7 +40,7 @@ class CaptchasController extends Controller
             'captcha_image_content' => $captcha->inline()
         ];
 
-        return $this->response->array($result)->setStatusCode(201);
+        return $this->response->array(['data' => $result])->setStatusCode(201);
     }
     /**
      * 图片验证码
@@ -77,6 +77,6 @@ class CaptchasController extends Controller
             'verify_status' => true
         ];
 
-        return $this->response->array($result)->setStatusCode(200);
+        return $this->response->array(['data' => $result])->setStatusCode(200);
     }
 }

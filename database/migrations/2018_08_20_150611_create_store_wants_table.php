@@ -17,6 +17,7 @@ class CreateStoreWantsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->index()->comment("用户id");
             $table->unsignedInteger('category_id')->index()->comment('分类id');
+            $table->unsignedInteger('location_id')->index()->comment('城市地址id');
             $table->string('name')->index()->comment('品牌名称');
             $table->integer('deadline')->comment('求购截止时间');
             $table->string('requirement', 500)->comment('货品要求');

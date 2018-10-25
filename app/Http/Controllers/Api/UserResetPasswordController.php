@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Middleware\VerifyCaptcha;
 use App\Models\User;
+use App\Transformers\UserTransformer;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 class UserResetPasswordController extends Controller
@@ -53,7 +54,7 @@ class UserResetPasswordController extends Controller
             return $this->response->error('用户不存在', 422);
         }
         $this->resetPassword($user, $request->getPassword());
-        return $this->response->array($user)->setStatusCode(201);
+        return $this->response->item($user, new UserTransformer())->setStatusCode(201);
     }
 
     /**

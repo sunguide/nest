@@ -161,9 +161,6 @@ $api->version('v1', [
         //求购大厅
         $api->get('wants', 'WantsController@index')
             ->name('api.wants.index');
-        //新增求购
-        $api->post('wants', 'WantsController@store')
-            ->name('api.wants.store');
         //查看求购详情
         $api->get('wants/{want}', 'WantsController@show')
             ->name('api.wants.show');
@@ -228,6 +225,10 @@ $api->version('v1', [
             $api->patch('store/cart', 'CartController@update')->name('api.shops.categories.update');
             // 移除购物车
             $api->delete('store/cart', 'CartController@destroy')->name('api.shops.categories.destroy');
+
+            //求购
+            //新增求购
+            $api->post('wants', 'WantsController@store')->name('api.wants.store');
 
         });
     });
