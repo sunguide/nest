@@ -10,7 +10,8 @@ class Category extends Model
         'pid',
         'name',
         'description',
-        'alias'
+        'alias',
+        'image',
     ];
 
     public function getIdByAlias($alias, $pid = 0){

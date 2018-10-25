@@ -15,7 +15,8 @@ class CategoryTransformer extends TransformerAbstract
             'pid' => intval($category->pid),
             'name' => $category->name,
             'description' => strval($category->description),
-            'alias' => strval($category->alias)
+            'alias' => strval($category->alias),
+            'image' => strval($category->image),
         ];
     }
 }

@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name')->index()->comment('名称');
             $table->string('alias')->index()->comment('别名');
             $table->text('description')->nullable()->comment('描述');
+            $table->string('image')->default('')->comment('图片');
             $table->timestamps();
         });
     }

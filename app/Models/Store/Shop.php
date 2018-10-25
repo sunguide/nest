@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Store;
+use App\Models\UserAuthentication;
 use Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,11 @@ class Shop extends Model
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
     ];
+    //认证
+    public function authentications()
+    {
+        return $this->hasMany(UserAuthentication::class);
+    }
 
     //店铺优惠券
     public function coupons()
