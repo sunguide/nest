@@ -17,7 +17,7 @@ class ProductReviewTransformer extends TransformerAbstract
             'product_id' => (int) $review->product_id,
             'sku_id' => (int) $review->sku_id,
             'content' => $review->content,
-            'images' =>  strval($review->images),
+            'images' =>  $review->images ? explode(",", $review->images) : [],
             'grade' => floatval($review->grade),
             'is_anonymous' => boolval($review->is_anonymous),
             'created_at' => $review->created_at->toDateTimeString(),

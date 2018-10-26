@@ -53,7 +53,7 @@ class UserResetPasswordController extends Controller
         if(!$user){
             return $this->response->error('用户不存在', 422);
         }
-        $this->resetPassword($user, $request->getPassword());
+        $this->resetPassword($user, $request->input('password'));
         return $this->response->item($user, new UserTransformer())->setStatusCode(201);
     }
 
