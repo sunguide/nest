@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->float('rating')->default(5);
             $table->unsignedInteger('sold_count')->default(0);
             $table->unsignedInteger('review_count')->default(0);
+            $table->decimal('original_price', 10, 2);
             $table->decimal('price', 10, 2);
             $table->timestamps();
         });

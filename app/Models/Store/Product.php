@@ -8,7 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $table = "store_products";
-    protected $fillable = ['title', 'description', 'image', 'on_sale', 'rating', 'sold_count', 'review_count', 'price'];
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'on_sale',
+        'rating',
+        'sold_count',
+        'review_count',
+        'price',
+        'original_price',
+    ];
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
     ];
@@ -20,7 +30,7 @@ class Product extends Model
     }
 
     public function getImagesAttribute(){
-        return explode(",", $this->image);
+        return $this->image ? explode(",", $this->image):[];
     }
 
     // 关联店铺

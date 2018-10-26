@@ -8,7 +8,22 @@ use App\Exceptions\InternalException;
 class ProductSku extends Model
 {
     protected $table = "store_product_skus";
-    protected $fillable = ['title', 'description', 'price', 'stock'];
+    protected $fillable = [
+        'product_id',
+        'title',
+        'description',
+        'image',
+        'original_price',
+        'price',
+        'stock'
+    ];
+
+    protected $appends = ['images'];
+
+
+    public function getImagesAttribute(){
+        return $this->image ? explode(",", $this->image):[];
+    }
 
     public function product()
     {
