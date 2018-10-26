@@ -12,10 +12,15 @@ class Product extends Model
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
     ];
+    protected $appends = ['images'];
     // 与商品SKU关联
     public function skus()
     {
         return $this->hasMany(ProductSku::class);
+    }
+
+    public function getImagesAttribute(){
+        return explode(",", $this->image);
     }
 
     // 关联店铺

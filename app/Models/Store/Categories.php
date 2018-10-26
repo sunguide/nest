@@ -15,4 +15,9 @@ class Categories extends Model
         'shop_id',
         'status'
     ];
+
+
+    public function products(){
+        return Product::query()->where("shop_id", $this->shop_id)->where("shop_category_id", $this->id)->limit(10)->get();
+    }
 }
