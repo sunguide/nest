@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreCategoriesTable extends Migration
+class CreateRegionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateStoreCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_categories', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('pid');
-            $table->unsignedInteger('shop_id');
-            $table->string('name');
-            $table->tinyInteger('status');
+            $table->string('node')->commnet("节点");
+            $table->string('name')->comment("地名");
+            $table->tinyInteger('level')->default(1);
+            $table->double('lat')->nullable();
+            $table->double('lng')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateStoreCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_categories');
+        Schema::dropIfExists('regions');
     }
 }
