@@ -19,8 +19,6 @@ class CreateRegionsTable extends Migration
             $table->string('node')->commnet("节点");
             $table->string('name')->comment("地名");
             $table->tinyInteger('level')->default(1);
-            $table->double('lat')->nullable();
-            $table->double('lng')->nullable();
             $table->timestamps();
         });
     }

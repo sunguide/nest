@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('phone_number', function($attribute, $value, $parameters, $validator) {
-            if(preg_match("/^1[34578]\d{9}$/", $value)){
+            if(preg_match("/^[(\+86)(\+93)1]+[34578]\d{9}$/", $value)){
                 return true;
             }
             return false;

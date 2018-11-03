@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-class ProductReviewRequest extends FormRequest
+class CommentRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

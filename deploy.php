@@ -25,7 +25,7 @@ set('allow_anonymous_stats', false);
 host('kabao.im')//,
     ->stage('test')
     ->user('root')
-    ->set('deploy_path', '/home/wwwroot/store1.kabao.im');
+    ->set('deploy_path', '/home/wwwroot/nest.kabao.im');
 // Tasks
 
 task('build', function () {

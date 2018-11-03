@@ -22,6 +22,9 @@ $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
     'middleware' => ['bindings']
 ], function ($api) {
+    $api->get('/',function (){
+        return 'hello , this is api server !';
+    });
 
     //公共接口服务
     $api->group([
@@ -111,6 +114,25 @@ $api->version('v1', [
         $api->get('advertisement/positions/{position}/items', 'AdvertisementItemsController@index')
             ->name('api.advertisement.items.index');
     });
+
+
+    // 房屋接口
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => config('api.rate_limits.access.limit'),
+        'expires' => config('api.rate_limits.access.expires'),
+    ], function ($api) {
+
+        // 获取广告内容列表
+        $api->get('houses', 'HousesController@index')->name('api.houses.index');
+        $api->get('houses/{house}', 'HousesController@show')->name('api.houses.show');
+
+        $api->group(['middleware' => 'api.auth'], function ($api) {
+            // 创建房屋
+            $api->post('houses', 'HousesController@store')->name('api.houses.store');
+        });
+    });
+
     // 商城接口
     $api->group([
         'middleware' => 'api.throttle',
@@ -264,6 +286,10 @@ $api->version('v1', [
         $api->get('actived/users', 'UsersController@activedIndex')
             ->name('api.actived.users.index');
         // 当前用户信息
+        $api->get('users/{user}/agent', 'UsersController@agent')
+            ->name('api.users.show');
+
+        // 当前用户信息
         $api->get('users/{user}', 'UsersController@show')
             ->name('api.users.show');
 
@@ -274,6 +300,7 @@ $api->version('v1', [
             // 当前登录用户信息
             $api->get('user', 'UsersController@me')
                 ->name('api.user.show');
+
             // 编辑登录用户信息
             $api->patch('user', 'UsersController@update')
                 ->name('api.user.update');

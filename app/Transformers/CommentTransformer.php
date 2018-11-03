@@ -2,14 +2,14 @@
 
 namespace App\Transformers;
 
-use App\Models\Store\ProductReview;
+use App\Models\Store\Comment;
 use League\Fractal\TransformerAbstract;
 
-class ProductReviewTransformer extends TransformerAbstract
+class CommentTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['user'];
 
-    public function transform(ProductReview $review)
+    public function transform(Comment $review)
     {
         return [
             'id' => $review->id,
@@ -25,7 +25,7 @@ class ProductReviewTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeUser(ProductReview $review)
+    public function includeUser(Comment $review)
     {
         return $this->primitive($review->user, new UserTransformer());
     }

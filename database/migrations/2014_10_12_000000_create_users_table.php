@@ -20,6 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->rememberToken();
+            $table->string('languages');
+            $table->string('nation');
+            $table->string('local_name')->comment('本国姓名');
+            $table->tinyInteger('gender')->default(0)->comment("0:未知，1:男，2:女，3：其他");
             $table->timestamps();
             $table->unique(['phone', 'email']);
         });

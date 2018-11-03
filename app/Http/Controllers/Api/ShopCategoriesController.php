@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\InternalException;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\Api\ProductCategoryRequest;
-use App\Http\Requests\Api\ProductReviewRequest;
+use App\Http\Requests\Api\CommentRequest;
 use App\Models\Store\Categories;
 use App\Models\Store\Product;
-use App\Models\Store\ProductReview;
+use App\Models\Store\Comment;
 use App\Transformers\ProductCategoriesTransformer;
-use App\Transformers\ProductReviewTransformer;
+use App\Transformers\CommentTransformer;
 use Illuminate\Http\Request;
 use App\Models\Store\Shop;
 
@@ -50,9 +50,9 @@ class ShopCategoriesController extends Controller
      *
      * @apiSuccess {Object} 评价详情
      */
-    public function show(ProductReview $review)
+    public function show(Comment $review)
     {
-        return $this->response->item($review, new ProductReviewTransformer());
+        return $this->response->item($review, new CommentTransformer());
     }
 
     /**

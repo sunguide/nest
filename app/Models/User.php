@@ -33,6 +33,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified' => 'boolean',
     ];
 
+    protected $appends = [
+        'grade',
+    ];
+
+
     //
     public function findByPhone(){
 
@@ -84,6 +89,15 @@ class User extends Authenticatable implements JWTSubject
             ->withTimestamps()
             ->where("user_favorites.target_type=" . Store\Shop::class)
             ->orderBy('user_favorites.created_at', 'desc');
+    }
+
+    public function getGradeAttribute()
+    {
+        $count = Comment::query()->where("user_id")->count();
+        if($count){
+            return Comment::query()->where("user_id")->sum("grade") / $count;
+        }
+        return 5.0;
     }
 
     public function setPasswordAttribute($value)

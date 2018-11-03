@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Image;
 use App\Services\UserService;
 use App\Transformers\Store\ShopTransformer;
+use App\Transformers\UserAgentTransformer;
 use Illuminate\Http\Request;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
@@ -114,7 +115,7 @@ class UsersController extends Controller
     {
         $user = $this->user();
 
-        $attributes = $request->only(['name', 'email', 'introduction', 'registration_id']);
+        $attributes = $request->only(['name', 'email', 'avatar', 'introduction', 'gender', 'nation', 'local_name', 'languages', 'is_agent']);
 
         if ($request->avatar_image_id) {
             $image = Image::find($request->avatar_image_id);
@@ -131,9 +132,9 @@ class UsersController extends Controller
         return $this->response->collection($user->getActiveUsers(), new UserTransformer());
     }
 
-    //获取我的店铺
-    public function shop(){
-        $shop = Shop::query()->where("user_id", $this->user()->id)->first();
-        return $this->response->item($shop, new ShopTransformer());
+    //获取经纪人
+
+    public function agent(User $user){
+        return $this->response->item($user, new UserAgentTransformer());
     }
 }
