@@ -4,10 +4,10 @@ namespace Deployer;
 require 'recipe/laravel.php';
 
 // Project name
-set('application', 'store1');
+set('application', 'nest');
 
 // Project repository
-set('repository', 'https://sunguide@bitbucket.org/sunguide/nest.git');
+set('repository', 'https://github.com/sunguide/nest.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
