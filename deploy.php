@@ -7,7 +7,7 @@ require 'recipe/laravel.php';
 set('application', 'store1');
 
 // Project repository
-set('repository', 'https://sunguide@bitbucket.org/sunguide/piustore.git');
+set('repository', 'https://sunguide@bitbucket.org/sunguide/nest.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
@@ -25,7 +25,7 @@ set('allow_anonymous_stats', false);
 host('kabao.im')//,
     ->stage('test')
     ->user('root')
-    ->set('deploy_path', '/home/wwwroot/nest.kabao.im');
+    ->set('deploy_path', '/home/wwwroot/ohmynest.com');
 // Tasks
 
 task('build', function () {
