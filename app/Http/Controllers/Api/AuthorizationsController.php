@@ -37,6 +37,7 @@ class AuthorizationsController extends Controller
             $credentials['email'] = $username :
             $credentials['phone'] = $username;
 
+
         $credentials['password'] = $request->password;
         if (!$token = Auth::guard('api')->attempt($credentials)) {
             return $this->response->errorUnauthorized(trans('auth.failed'));
