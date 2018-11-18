@@ -7,7 +7,7 @@ use App\Http\Requests\Api\LocateRequest;
 use App\Http\Requests\Api\WantsRequest;
 use App\Http\Requests\Request;
 use App\Models\Location;
-use App\Models\Store\Want;
+use App\Models\Want;
 use App\Services\LocationService;
 use App\Transformers\WantTransformer;
 use Dingo\Api\Auth\Auth;
@@ -74,7 +74,6 @@ class WantsController extends Controller
         if($this->user()){
             $want->user_id = $this->user()->id;
         }
-        dd($request->input());
         $want->save();
         //attributes
         $attributes = [];

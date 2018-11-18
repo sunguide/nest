@@ -2,28 +2,29 @@
 
 namespace App\Transformers;
 
-use App\Models\File;
-use App\Models\Store\Want;
+use App\Models\Want;
+use function GuzzleHttp\Psr7\str;
 use League\Fractal\TransformerAbstract;
 
 class WantTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['location', 'user', 'category'];
-    protected $defaultIncludes = ['location', 'user', 'category'];
+    protected $availableIncludes = ['regions', 'user', 'category'];
+    protected $defaultIncludes = ['user', 'category'];
 
     public function transform(Want $want)
     {
         $data = [
             'id' => intval($want->id),
             'user_id' => intval($want->user_id),
-            'category_id' => intval($want->category_id),
-            'location_id' => intval($want->location_id),
-            'name' => $want->name,
-            'deadline' => intval($want->deadline),
-            'requirement' => $want->requirement,
-            'specification' => $want->specification,
-            'amount' => intval($want->amount),
-            'introduction' => $want->introduction,
+            'type' => $want->type,
+            'trade' => $want->trade,
+            'title' => $want->title,
+            'description' => $want->description,
+            'budget_min' => $want->budget_min,
+            'budget_max' => $want->budget_max,
+            'contact_name' => strval($want->contact_name),
+            'contact_gender' => strval($want->contact_gender),
+            'contact_tel' => strval($want->contact_tel),
             'is_featured' => boolval($want->is_featured),
             'created_at' => $want->created_at?$want->created_at->toDateTimeString():null,
             'updated_at' => $want->updated_at?$want->updated_at->toDateTimeString():null,
@@ -37,9 +38,9 @@ class WantTransformer extends TransformerAbstract
         }
         return $data;
     }
-    public function includeLocation(Want $want){
-        if($want->location){
-            return $this->primitive($want->location, new LocationTransformer());
+    public function includeRegions(Want $want){
+        if($want->regions){
+            return $this->collection($want->regions, new RegionTransformer());
         }
     }
 

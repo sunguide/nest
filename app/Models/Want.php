@@ -1,10 +1,6 @@
 <?php
 
-namespace App\Models\Store;
-use App\Models\Category;
-use App\Models\Location;
-use App\Models\User;
-use Illuminate\Support\Str;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +11,7 @@ class Want extends Model
         'user_id',
         'type',
         'purpose',
+        'trade',
         'title',
         'description',
         'budget_min',
@@ -45,7 +42,7 @@ class Want extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function locations()
+    public function regions()
     {
         return [];
     }
