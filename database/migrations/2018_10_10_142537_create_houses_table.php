@@ -16,7 +16,7 @@ class CreateHousesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('type')->comment('房屋类型:公寓，别墅，民宿');
             $table->string('trade')->comment('交易类型：出售sale，出租rent');
-            $table->string('purpose')->comment('交易类型：出售sale，出租rent');
+            $table->string('purpose')->comment('用途');
             $table->string('title');
             $table->text('description')->comment('图文详情');
             $table->unsignedInteger('price')->default(0)->comment('价格');

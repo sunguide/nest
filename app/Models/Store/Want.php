@@ -10,22 +10,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Want extends Model
 {
-    protected $table = "store_wants";
+    protected $table = "wants";
     protected $fillable = [
         'user_id',
-        'category_id',
-        'location_id',
-        'name',
-        'deadline',
-        'requirement',
-        'specification',
-        'amount',
-        'introduction',
+        'type',
+        'purpose',
+        'title',
+        'description',
+        'budget_min',
+        'budget_max',
+        'region_ids',
+        'contact_name',
+        'contact_gender',
+        'contact_tel',
+        'address',
+        'features',
+        'is_approved',
         'is_featured',
-        'sort'
+        'status',
+        'sort',
     ];
     protected $casts = [
         'is_featured' => 'boolean', // is_featured 是一个布尔类型的字段
+        'is_approved' => 'boolean', // is_approved 是一个布尔类型的字段
     ];
 
     public function user()
@@ -38,9 +45,9 @@ class Want extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function location()
+    public function locations()
     {
-        return $this->belongsTo(Location::class);
+        return [];
     }
     // attributes
     public function attributes()

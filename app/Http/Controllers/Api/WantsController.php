@@ -13,16 +13,16 @@ use App\Transformers\WantTransformer;
 use Dingo\Api\Auth\Auth;
 
 /**
- * 我想买
+ * 帮住
  *
  * @Resource("wants", uri="/wants")
  */
 class WantsController extends Controller
 {
     /**
-     * 我想买
+     * 帮住
      *
-     * 求购大厅
+     * 帮住列表
      *
      * @Get("/")
      * @Versions({"v1"})
@@ -74,9 +74,10 @@ class WantsController extends Controller
         if($this->user()){
             $want->user_id = $this->user()->id;
         }
+        dd($request->input());
         $want->save();
         //attributes
-        $attributes = ['cultivation_type', 'category_variety_id', 'contact_name', 'contact_phone'];
+        $attributes = [];
         foreach ($attributes as $k => $key){
             if($request->$key){
                 $want->setAttribute($key, $request->$key);
