@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Middleware\VerifyCaptcha;
+use App\Models\House;
 use App\Models\Store\Shop;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Want;
 use App\Services\UserService;
+use App\Transformers\HouseTransformer;
 use App\Transformers\Store\ShopTransformer;
 use App\Transformers\UserAgentTransformer;
+use App\Transformers\WantTransformer;
 use Illuminate\Http\Request;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
@@ -137,4 +141,49 @@ class UsersController extends Controller
     public function agent(User $user){
         return $this->response->item($user, new UserAgentTransformer());
     }
+
+    //获取个人发布
+    public function houses(User $user, Request $request){
+        $builder = House::query()->where("user_id", $user->id);
+        //交易类型
+        if($request->input("trade")){
+            $builder->where("trade", $request->input("trade"));
+        }
+        //房屋类型
+        if($request->input("type")){
+            $builder->where("type", $request->input("type"));
+        }
+        //日期筛选
+        if($request->input("start_date")){
+            $builder->where("created_at", '>=', $request->input("start_date"));
+        }
+        if($request->input("end_date")){
+            $builder->where("created_at", '<=', $request->input("end_date"));
+        }
+        $houses = $builder->paginate($request->input('per_page', 10));
+        return $this->response->paginator($houses, new HouseTransformer());
+    }
+
+    //获取个人帮住
+    public function wants(User $user, Request $request){
+        $builder = Want::query()->where("user_id", $user->id);
+        //交易类型
+        if($request->input("trade")){
+            $builder->where("trade", $request->input("trade"));
+        }
+        //房屋类型
+        if($request->input("type")){
+            $builder->where("type", $request->input("type"));
+        }
+        //日期筛选
+        if($request->input("start_date")){
+            $builder->where("created_at", '>=', $request->input("start_date"));
+        }
+        if($request->input("end_date")){
+            $builder->where("created_at", '<=', $request->input("end_date"));
+        }
+        $wants = $builder->paginate($request->input('per_page', 10));
+        return $this->response->paginator($wants, new WantTransformer());
+    }
+
 }

@@ -26,7 +26,7 @@ class LocationService
                         * sin( radians( lat ) )
                     )
                 ) AS distance
-            FROM locations
+            FROM regions
             WHERE level = 2
             HAVING distance < $distance
             ORDER BY distance";

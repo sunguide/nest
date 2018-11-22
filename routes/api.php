@@ -94,7 +94,7 @@ $api->version('v1', [
 
         //定位
         $api->get('location/locate', 'LocationController@locate')->name('api.location.locate');
-        $api->get('location/search', 'LocationController@search')->name('api.location.search');
+        $api->get('regions/search', 'RegionsController@search')->name('api.location.search');
     });
 
     // 广告接口
@@ -292,7 +292,9 @@ $api->version('v1', [
         // 当前用户信息
         $api->get('users/{user}', 'UsersController@show')
             ->name('api.users.show');
-
+        // 获取用户发布的房子
+        $api->get('users/{user}/houses', 'UsersController@houses')->name('api.users.houses');
+        $api->get('users/{user}/wants', 'UsersController@wants')->name('api.users.wants');
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {

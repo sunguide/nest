@@ -16,7 +16,7 @@ class CreateHouseGalleriesTable extends Migration
         Schema::create('house_galleries', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('house_id');
-            $table->string('url')->unique();
+            $table->string('url');
             $table->string('extra')->comment('扩展');
             $table->boolean('is_featured')->default(false)->comment("精选");
             $table->timestamps();
