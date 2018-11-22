@@ -16,12 +16,12 @@ class CreateHouseFacilitiesTable extends Migration
         Schema::create('house_facilities', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('house_id');
-            $table->string('name');
-            $table->string('extra')->comment('扩展');
-            $table->boolean('is_owned')->default(false)->comment("是否拥有");
+            $table->unsignedInteger('facility_id');
+            $table->boolean('is_owned')->default(true)->comment("是否拥有");
             $table->timestamps();
 
             $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade');
+            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('cascade');
         });
     }
 

@@ -81,4 +81,28 @@ class HousesController extends Controller
         }
         return $this->response->item($house, new HouseTransformer())->setStatusCode(201);
     }
+
+
+    public function facilities(){
+
+    }
+
+
+    public function recommends(Request $request)
+    {
+        $builder = House::query()->where('status', House::STATUS_PUBLISHED);
+
+        if($request->input("trade")){
+            $builder->where("trade", $request->input("trade"));
+        }
+
+        $order = $request->input("order", 'is_featured');
+        $orderway = $request->orderway?:"desc";
+        $builder->orderBy($order, $orderway);
+
+        $houses = $builder->paginate(10);
+
+        return $this->response->paginator($houses, new HouseTransformer());
+
+    }
 }

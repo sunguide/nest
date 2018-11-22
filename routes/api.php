@@ -95,6 +95,10 @@ $api->version('v1', [
         //定位
         $api->get('location/locate', 'LocationController@locate')->name('api.location.locate');
         $api->get('regions/search', 'RegionsController@search')->name('api.location.search');
+        //房屋设施
+        $api->get('facilities', 'FacilitiesController@index')->name('api.facilities.index');
+        //房屋推荐
+        $api->get('house/recommends', 'HousesController@recommends')->name('api.houses.recommends');
     });
 
     // 广告接口
