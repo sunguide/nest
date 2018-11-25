@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 /**
  * 注册登录
@@ -120,6 +121,11 @@ class UsersController extends Controller
         $user = $this->user();
 
         $attributes = $request->only(['name', 'email', 'avatar', 'introduction', 'gender', 'nation', 'local_name', 'languages', 'is_agent']);
+
+        //如果用户名和手机号不一致才允许修改用户名
+        if($request->input('name') && $user->name != $user->phone){
+            unset($attributes['name']);
+        }
 
         if ($request->avatar_image_id) {
             $image = Image::find($request->avatar_image_id);
