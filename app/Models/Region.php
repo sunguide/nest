@@ -17,12 +17,17 @@ class Region extends Model
 
 
     public static function getFullName($id){
-        $location = Region::find($id);
-        if($location){
-            if($location['pid']){
-                return self::getFullName($location['pid']) .'-'. $location['name'];
-            }
-            return $location['name'];
+        $region = Region::find($id);
+        if($region){
+            return $region['name'];
+        }
+        return '未知';
+    }
+
+    public static function getNameById($id){
+        $region = Region::find($id);
+        if($region){
+            return $region['name'];
         }
         return '';
     }

@@ -114,4 +114,20 @@ class House extends Model
         // 按照创建时间排序
         return $query->orderBy('created_at', 'desc');
     }
+
+    public static function getTypeDesc($type)
+    {
+        return isset(self::$typeMap[$type])?self::$typeMap[$type]:'未知';
+    }
+
+    public static function getTradeDesc($trade)
+    {
+        return isset(self::$tradeMap[$trade])?self::$tradeMap[$trade]:'未知';
+    }
+
+    public static function getPurposeDesc($purpose)
+    {
+        return isset(self::$purposeMap[$purpose])?self::$tradeMap[$purpose]:'未知';
+    }
+
 }

@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'email', 'password',  'introduction', 'avatar', 'email_verified',
+        'name', 'phone', 'email', 'password',  'introduction', 'avatar', 'email_verified','gender'
     ];
 
     /**
@@ -38,7 +38,16 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    //
+
+    const GENDER_FEMAl = 1;
+    const GENDER_WOMEN = 2;
+    const GENDER_OTHER = 3;
+
+    public static $genderMap = [
+        self::GENDER_FEMAl => '先生',
+        self::GENDER_WOMEN => '女生',
+        self::GENDER_OTHER => '其他'
+    ];
     public function findByPhone(){
 
     }
@@ -147,5 +156,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public static function getGenderDesc($gender){
+        return isset(self::$genderMap[$gender]) ? self::$genderMap[$gender] : '未知';
     }
 }

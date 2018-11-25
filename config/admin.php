@@ -5,12 +5,12 @@ return [
     /*
      * 站点标题
      */
-    'name' => 'PiuStore后台管理',
+    'name' => 'OHMYNEST后台管理',
 
     /*
      * 页面顶部 Logo
      */
-    'logo' => '<b>PiuStore</b>',
+    'logo' => '<b>OHMYNEST</b>',
 
     /*
      * 页面顶部小 Logo
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-Admin 页面标题
      */
-    'title' => 'PiuStore管理后台',
+    'title' => 'OHMYNEST管理后台',
 
     /*
      * 是否使用 https
@@ -68,7 +68,7 @@ return [
      */
     'upload' => [
         // 对应 filesystem.php 中的 disks
-        'disk' => 'public',
+        'disk' => 'admin',
 
         'directory' => [
             'image' => 'images',
@@ -138,7 +138,7 @@ return [
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
      */
-    'layout' => ['sidebar-mini', 'sidebar-collapse'],
+    'layout' => ['fixed'],
 
     /*
      * 页面底部展示的版本.
