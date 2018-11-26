@@ -4,6 +4,9 @@ Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
 
 Auth::routes();
+//第三方登录
+Route::get('/auth/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('auth.login.callback');
+Route::get('/auth/{driver}', 'Auth\LoginController@redirectToProvider')->name('auth.login');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/email_verify_notice', 'PagesController@emailVerifyNotice')->name('email_verify_notice');

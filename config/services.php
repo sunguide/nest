@@ -39,5 +39,10 @@ return [
         'client_secret' => env('WEIXIN_SECRET'),
         'redirect' => env('WEIXIN_REDIRECT_URI')
     ],
+    'line' => [
+        'client_id' => env('LINE_KEY'),
+        'client_secret' => env('LINE_SECRET'),
+        'redirect' => env('LINE_REDIRECT_URI')
+    ],
 
 ];

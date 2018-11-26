@@ -32,7 +32,8 @@ class EventServiceProvider extends ServiceProvider
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             // add your listeners (aka providers) here
-            'SocialiteProviders\Weixin\WeixinExtendSocialite@handle'
+            'SocialiteProviders\Weixin\WeixinExtendSocialite@handle',
+            'SocialiteProviders\Line\LineExtendSocialite@handle',
         ],
         'eloquent.created: Illuminate\Notifications\DatabaseNotification' => [
             'App\Listeners\PushNotification',
