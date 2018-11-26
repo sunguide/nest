@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "aws/aws-sdk-php": "^3.74",
         "deployer/deployer": "^6.2",
         "dingo/api": "2.0.0-alpha2",
         "encore/laravel-admin": "1.5.*",

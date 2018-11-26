@@ -14,7 +14,7 @@ class VerificationCodeRequest extends FormRequest
         return [
             'captcha_key' => 'string',
             'captcha_code' => 'string',
-            'phone' => 'string|phone_number',
+            'phone' => 'string',
         ];
     }
 

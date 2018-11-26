@@ -5,12 +5,12 @@ return [
     /*
      * 站点标题
      */
-    'name' => 'OHMYNEST后台管理',
+    'name' => 'OhMyNest后台管理',
 
     /*
      * 页面顶部 Logo
      */
-    'logo' => '<b>OHMYNEST</b>',
+    'logo' => '<b>我的鸟窝管理后台</b>',
 
     /*
      * 页面顶部小 Logo

@@ -19,9 +19,9 @@ return [
             'file' => '/tmp/easy-sms.log',
         ],
         'aliyun' => [
-            'access_key_id' => '42BkfEowOc7QmLjg',
-            'access_key_secret' => 'Nm4dGUA3U6vHh9hYQWhec77UrWcekY',
-            'sign_name' => '孙贵德',
+            'access_key_id' => env('ALIYUN_ACCESS_KEY_ID'),
+            'access_key_secret' => env('ALIYUN_ACCESS_KEY_SECRET'),
+            'sign_name' => '鸟窝',
         ],
         'yunpian' => [
             'api_key' => env('YUNPIAN_API_KEY'),

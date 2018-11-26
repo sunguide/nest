@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\SmsService;
 use Illuminate\Http\Request;
 use Overtrue\EasySms\EasySms;
 use Illuminate\Support\Str;
@@ -19,7 +20,7 @@ class VerificationCodesController extends Controller
      * @Request({"phone": "18500000000"})
      * @Response(200, body={"key": "verificationCode_roQ3cfoITTHLLiP","expired_at": "2018-09-26 13:44:00"})
      */
-    public function store(VerificationCodeRequest $request, EasySms $easySms)
+    public function store(VerificationCodeRequest $request, SmsService $smsService)
     {
         //如果传递图片验证码key则需要先验证图片验证码的有效性
         if($request->captcha_key){
@@ -32,13 +33,13 @@ class VerificationCodesController extends Controller
             if (!hash_equals(Str::lower($captchaData['code']), Str::lower($request->captcha_code))) {
                 // 验证错误就清除缓存
                 \Cache::forget($request->captcha_key);
-                return $this->response->errorUnauthorized('图片验证码错误');
+                return $this->response->errorBadRequest('图片验证码错误');
             }
         }
 
         $phone = $captchaData['phone'] ?? $request->phone;
         if (!$phone) {
-            return $this->response->errorUnauthorized('手机有误');
+            return $this->response->errorBadRequest('手机有误');
         }
         $currentDay = now()->format("Ymd");
         $count = \Cache::get("sms_send_count_{$currentDay}_{$phone}");
@@ -46,19 +47,19 @@ class VerificationCodesController extends Controller
         if($count && $count >= 5){
             return $this->response->error('今日获取已达到上限', 400);
         }
+        $ip = $request->getClientIp();
+        //每天一个IP限量10条
+        $ipSendCount = \Cache::get("sms_send_count_{$currentDay}_{$ip}");
+        if($ipSendCount && $ipSendCount >= 10){
+            return $this->response->error('当前IP,今日获取已达到上限', 400);
+        }
         if (!app()->environment('production')) {
             $code = '123456';
         } else {
             // 生成4位随机数，左侧补0
             $code = str_pad(random_int(1, 999999), 6, 0, STR_PAD_LEFT);
             try {
-                $result = $easySms->send($phone, [
-                    'content' => "您的验证码{$code}，该验证码5分钟内有效，请勿泄漏于他人！",
-                    'template' => 'SMS_140680238',
-                    'data' => [
-                        'code' => $code
-                    ]
-                ]);
+                $smsService->sendVerifyCodeForRegister($phone, $code);
             }catch (\GuzzleHttp\Exception\ClientException $exception) {
                 $response = $exception->getResponse();
                 $result = json_decode($response->getBody()->getContents(), true);
@@ -66,6 +67,7 @@ class VerificationCodesController extends Controller
             }catch (\Exception $exception){
                 return $this->response->errorInternal($exception->getMessage() ?? '短信发送异常');
             }
+
         }
 
         $key = 'verificationCode_'.str_random(15);
@@ -76,6 +78,7 @@ class VerificationCodesController extends Controller
         \Cache::forget($request->captcha_key);
         //记录当日手机号发送次数
         \Cache::put("sms_send_count_{$currentDay}_{$phone}", $count + 1);
+        \Cache::put("sms_send_count_{$currentDay}_{$ip}", $ipSendCount + 1);
         return $this->response->array([
             'data' => [
                 'key' => $key,
