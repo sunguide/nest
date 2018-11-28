@@ -126,11 +126,18 @@ class UsersController extends Controller
         if($request->input('name') && $user->name != $user->phone){
             unset($attributes['name']);
         }
+        //是否是经纪人只允许修改一次
+        if($user->is_agent !== -1){
+            unset($attributes['is_agent']);
+        }
 
         if ($request->avatar_image_id) {
             $image = Image::find($request->avatar_image_id);
 
             $attributes['avatar'] = $image->path;
+        }
+        if(is_array($attributes['languages'])){
+            $attributes['languages'] = implode(',', $attributes['languages']);
         }
         $user->update($attributes);
 
