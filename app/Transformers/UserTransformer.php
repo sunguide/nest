@@ -22,7 +22,7 @@ class UserTransformer extends TransformerAbstract
             'gender' => $user->gender,
             'nation' => strval($user->nation),
             'local_name' => strval($user->local_name),
-            'languages' => strval($user->languages),
+            'languages' => explode(',', $user->languages),
             'grade' => floatval($user->grade),
             'is_agent' => boolval($user->is_agent),
 //            'bound_wechat' => ($user->weixin_unionid || $user->weixin_openid) ? true : false,
