@@ -136,7 +136,7 @@ class UsersController extends Controller
 
             $attributes['avatar'] = $image->path;
         }
-        if(is_array($attributes['languages'])){
+        if(isset($attributes['languages']) && is_array($attributes['languages'])){
             $attributes['languages'] = implode(',', $attributes['languages']);
         }
         $user->update($attributes);
