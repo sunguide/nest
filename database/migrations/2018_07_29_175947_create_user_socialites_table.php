@@ -20,6 +20,9 @@ class CreateUserSocialitesTable extends Migration
             $table->string('driver', 100);
             $table->string('open_id', 100)->index();
             $table->string('union_id', 100)->index();
+            $table->string('access_token', 100)->nullable();
+            $table->string('refresh_token', 100)->nullable();
+            $table->integer('expires_in')->default(0);
             $table->boolean('enabled');
             $table->timestamps();
         });
