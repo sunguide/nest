@@ -15,6 +15,7 @@ class UserRequest extends FormRequest
             case 'POST':
                 return [
                     'phone' => 'required|string|max:255',
+                    'phone_prefix' => 'required|string|max:4',
                     'password' => 'required|string|min:6',
                     'verification_key' => 'required|string',
                     'verification_code' => 'required|string',
