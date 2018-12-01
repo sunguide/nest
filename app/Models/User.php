@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Requests\Api\UserFavoriteRequest;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -49,8 +50,26 @@ class User extends Authenticatable implements JWTSubject
         self::GENDER_WOMEN => '女生',
         self::GENDER_OTHER => '其他'
     ];
-    public function findByPhone(){
 
+    protected static function boot()
+    {
+        parent::boot();
+        // 监听模型创建事件，在写入数据库之前触发
+        static::creating(function ($model) {
+            // 如果模型的 no 字段为空
+            if (!$model->email) {
+                // 调用 findAvailableNo 生成订单流水号
+                $model->email = static::getAvailableEmail();
+                // 如果生成失败，则终止创建订单
+                if (!$model->email) {
+                    return false;
+                }
+            }
+        });
+    }
+
+    public function findByPhone(){
+        return $this->newQuery()->where("phone")->first();
     }
 
     //我的地址
@@ -161,5 +180,9 @@ class User extends Authenticatable implements JWTSubject
 
     public static function getGenderDesc($gender){
         return isset(self::$genderMap[$gender]) ? self::$genderMap[$gender] : '未知';
+    }
+
+    private static function getAvailableEmail(){
+        return "temp_". time() . rand(100000,999999) . "@ohmynest.com";
     }
 }
