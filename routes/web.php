@@ -1,6 +1,6 @@
 <?php
 
-Route::redirect('/', '/products')->name('root');
+Route::get('/', 'IndexController@index')->name('www.root');
 Route::get('products', 'ProductsController@index')->name('products.index');
 
 Auth::routes();
