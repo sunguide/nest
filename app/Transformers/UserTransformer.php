@@ -24,7 +24,7 @@ class UserTransformer extends TransformerAbstract
             'local_name' => strval($user->local_name),
             'languages' => explode(',', $user->languages),
             'grade' => floatval($user->grade),
-            'is_agent' => boolval($user->is_agent),
+            'is_agent' => intval($user->is_agent),
 //            'bound_wechat' => ($user->weixin_unionid || $user->weixin_openid) ? true : false,
 //            'last_actived_at' => $user->last_actived_at->toDateTimeString(),
             'created_at' => $user->created_at->toDateTimeString(),

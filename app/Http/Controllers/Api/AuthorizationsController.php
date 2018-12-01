@@ -59,7 +59,7 @@ class AuthorizationsController extends Controller
 
     public function socialStore($type, SocialAuthorizationRequest $request, UserSocialite $userSocialite)
     {
-        if (!in_array($type, ['weixin'])) {
+        if (!in_array($type, ['weixin', 'line', 'facebook'])) {
             return $this->response->errorBadRequest();
         }
 
@@ -83,31 +83,31 @@ class AuthorizationsController extends Controller
         }
 
         switch ($type) {
-        case 'weixin':
-            $unionid = $oauthUser->offsetExists('unionid') ? $oauthUser->offsetGet('unionid') : null;
-            $openid = $oauthUser->getId();
-            if ($unionid) {
-                $userSocialiteData = $userSocialite->getUserByDriverAndUnionId($type, $unionid)->first();
-            } else {
-                $userSocialiteData = $userSocialite->getUser($type, $openid)->first();
-            }
-
-            // 没有用户，默认创建一个用户
-            if (!$userSocialiteData) {
-                $user = User::create([
-                    'name' => $oauthUser->getNickname(),
-                    'avatar' => $oauthUser->getAvatar()
-                ]);
-                if($user){
-                    UserSocialite::create([
-                        'driver' => $type,
-                        'open_id' => $openid,
-                        'union_id' => $unionid
-                    ]);
+            case 'weixin':
+                $unionid = $oauthUser->offsetExists('unionid') ? $oauthUser->offsetGet('unionid') : null;
+                $openid = $oauthUser->getId();
+                if ($unionid) {
+                    $userSocialiteData = $userSocialite->getUserByDriverAndUnionId($type, $unionid)->first();
+                } else {
+                    $userSocialiteData = $userSocialite->getUser($type, $openid)->first();
                 }
-            }else{
-                $user = User::find($userSocialiteData['id']);
-            }
+
+                // 没有用户，默认创建一个用户
+                if (!$userSocialiteData) {
+                    $user = User::create([
+                        'name' => $oauthUser->getNickname(),
+                        'avatar' => $oauthUser->getAvatar()
+                    ]);
+                    if($user){
+                        UserSocialite::create([
+                            'driver' => $type,
+                            'open_id' => $openid,
+                            'union_id' => $unionid
+                        ]);
+                    }
+                }else{
+                    $user = User::find($userSocialiteData['id']);
+                }
 
             break;
         }
