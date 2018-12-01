@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('phone_prefix')->nullable();
             $table->string('email')->default('');
+            $table->string('avatar')->default('');
             $table->string('password');
             $table->rememberToken();
             $table->string('languages')->default('');
