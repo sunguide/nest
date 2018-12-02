@@ -69,7 +69,9 @@ class AdvertisementItemsController extends Controller
             $grid->id('ID')->sortable();
             $grid->position_id('广告位');
             $grid->title('广告标题');
-            $grid->cover('图片');
+            $grid->cover('图片')->display(function ($cover){
+                return '<img src="'.config('filesystems.disks.admin.url').'/'.$cover.'" width="50px"/>';
+            });
             $grid->url('链接');
             $grid->content('广告内容');
             $grid->column('start_time', '开始时间')->display(function ($value) {
