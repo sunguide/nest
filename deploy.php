@@ -22,10 +22,21 @@ set('allow_anonymous_stats', false);
 
 // Hosts
 
-host('kabao.im')//,
-    ->stage('test')
+host('ohmynest.com')//,
+    ->stage('dev')
     ->user('root')
-    ->set('deploy_path', '/home/wwwroot/ohmynest.com');
+    ->set('deploy_path', '/home/wwwroot/api.dev.ohmynest.com');
+
+host('ohmynest.com')//,
+->stage('test')
+    ->user('root')
+    ->set('deploy_path', '/home/wwwroot/api.test.ohmynest.com');
+
+host('ohmynest.com')//,
+    ->stage('production')
+    ->user('root')
+    ->set('deploy_path', '/home/wwwroot/api.ohmynest.com');
+
 // Tasks
 
 task('build', function () {
