@@ -143,12 +143,23 @@ return [
     /*
      * 页面底部展示的版本.
      */
-    'version' => '1.5.x-dev',
+    'version' => '1.6.x-dev',
 
     /*
      * 扩展设置.
      */
     'extensions' => [
-
+        'alioss-upload' => [
+            'OSS_ACCESS_ID' => env('ALIYUN_ACCESS_KEY_ID', ''),
+            'OSS_ACCESS_KEY' => env('ALIYUN_ACCESS_KEY_SECRET', ''),
+            'OSS_ENDPOINT' => env('ALIYUN_OSS_ENDPOINT'),
+            'OSS_BUCKET' => env('ALIYUN_OSS_BUCKET'),
+            'OSS_HOST' => env('ALIYUN_OSS_HOST'),
+            'OSS_URL' => env('ALIYUN_OSS_URL') // 自定义域名（CDN）
+        ],
+        'grid-lightbox' => [
+            // Set to `false` if you want to disable this extension
+            'enable' => true,
+        ]
     ],
 ];

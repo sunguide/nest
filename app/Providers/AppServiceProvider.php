@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Encore\Admin\Config\Config;
 use Monolog\Logger;
 use Yansongda\Pay\Pay;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Schema::defaultStringLength(191);
+        Config::load();
     }
 
     /**

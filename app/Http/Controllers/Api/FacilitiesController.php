@@ -16,6 +16,6 @@ class FacilitiesController extends Controller
     {
         $facilities = Facility::query()->where("disabled", 0)->get();
 
-        return $this->response->collection($facilities, new FacilityTransformer())->setStatusCode(201);
+        return $this->response->collection($facilities, new FacilityTransformer());
     }
 }
